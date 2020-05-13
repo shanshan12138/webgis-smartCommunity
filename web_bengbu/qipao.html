@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<meta charset="UTF-8">
+
+		<title></title>
+
+		<style type="text/css">
+			.box {
+				width: 460px;
+				padding: 30px 100px;
+				position: relative;
+				margin-left: 100px;
+				background: #9ee06a;
+				border-radius: 5px;
+			}
+
+			.box span {
+				position: absolute;
+				overflow: hidden;
+			}
+
+			.box span.needle {
+				border-width: 14px 46px;
+				border-style: solid;
+				border-color: #9ee06a transparent transparent #9ee06a;
+				left: 22px;
+				top: 81.5px;
+			}
+
+			.box span.cover {
+				border-width: 16px 32px;
+				border-style: dashed solid solid dashed;
+				border-color: #fff transparent transparent #fff;
+				left: 13px;
+				top: 81.5px;
+			}
+
+			.box1 {
+				width: 10px;
+				height: 10px;
+				border: 10px solid;
+				border-color: red yellow blue green;
+			}
+
+			.box2 {
+				width: 0;
+				height: 0;
+				border: 30px solid;
+				border-color: pink transparent transparent transparent;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+			<span class="needle"></span>
+			<span class="cover"></span>
+			第一个气泡……
+		</div>
+		<div class="box1"></div><hr /><hr >
+		<div class="box2"></div>
+
+	</body>
+
+</html>

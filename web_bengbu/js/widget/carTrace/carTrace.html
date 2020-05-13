@@ -1,0 +1,271 @@
+<!--车辆轨迹-->
+<!--<div id="container-carTrace" style="position:absolute;bottom:2px;left:2px;width:800px;height:640px;background: #3C8DBC;display: none;box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);">-->
+<div id="container-carTrace" style="position:absolute;bottom:20px;left:10px;width:800px;height:640px;background: rgba(8,24,50,0.7);box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);border-style: solid;border-width: 5px;border-image: url(./img/bg_border.png) 5 fill / 1 / 0 stretch;display: none;">
+	<div id="carTraceHeader" style="width:100%;height:40px;top: 0px;left: 0px;float: top;">
+		<h4 style="float: left;color: #fff;margin-left: 10px;">车辆轨迹</h4>
+		<span id="deviceId" style="display: none;"></span>
+		<button type="button" class="close" style="width: 30px;height: 30px;margin:3px;font-size: 32px;font-weight: normal" id="carTraceClose">×</button>
+	</div>
+	<div class="analy-body" id="analy-body" style="height:600px;margin-bottom: 0px;height: 590px;background: none;">
+
+		<!-- 导航区 -->
+		<ul id="carTraceTab" class="nav nav-tabs" role="tablist">
+			<li name="allCar" class="active" role="presentation">
+				<a href="#allCarTrace" role="tab" data-toggle="tab">所有车辆</a>
+			</li>
+			<li name="keyCar" role="presentation">
+				<a href="#keyCarTrace" role="tab" data-toggle="tab">重点车辆</a>
+			</li>
+			<li name="personalCar" role="presentation">
+				<a href="#personalCar" role="tab" data-toggle="tab">个人车辆历史记录</a>
+			</li>
+			<li name="calenderlCar" role="presentation">
+				<a href="#calenderlCar" role="tab" data-toggle="tab">车次统计</a>
+			</li>
+		</ul>
+
+		<!-- 面板区 -->
+		<div id="tab_panel" class="tab-content">
+			<!--所有车辆-->
+			<div role="tabpanel" class="tab-pane active" id="allCarTrace" style="height:557px;color: #fff;">
+				<div style="height: 32px;width: 200px;font-size: 16px;margin: auto;line-height: 37px;"><b>今日车辆实时进出记录</b></div>
+				<!--background: #DFF0D8;-->
+				<div style="overflow: auto;height:490px;border: 1px solid #DDDDDD;" id="searchItem">
+					<table id="cxyTable" class="table table-striped">
+						<thead>
+							<tr>
+								<th>车牌号</th>
+								<th>出入时间</th>
+								<th>出入状况</th>
+								<th>停车场</th>
+								<th>违章记录</th>
+								<th>重点布控</th>
+							</tr>
+						</thead>
+						<tbody id="carTraceTBody">
+							<!--<tr>
+								<td>鄂A54321</td>
+								<td>2017-10-16 12:00:12</td>
+								<td>出口</td>
+								<td>xxx停车场</td>
+								<td>
+									<a id="carDetail1">查看记录</a>
+								</td>
+								<td>
+									<div class="switch switch-mini" data-on-label="重点" data-off-label="普通" data-on="danger" data-off="primary">
+										<input type="checkbox" />
+									</div>
+								</td>
+							</tr>-->
+						</tbody>
+					</table>
+				</div>
+				<div style="height: 35px;">
+					<div style="float: left;line-height: 35px;padding-left: 10px;">
+						<span>记录条数:</span>
+						<span id="allTotalCount">0</span>
+					</div>
+					<div id="pagination" class="pagination" style="float:right;text-align: center;margin-top: 6px;"></div>
+				</div>
+			</div>
+			<!-------------------------------------------------------------------------------------------------------------------------->
+			<!--重点车辆-->
+			<div role="tabpanel" class="tab-pane" id="keyCarTrace" style="height:557px;color: #fff;">
+				<div style="height: 32px;width: 200px;font-size: 16px;margin: auto;line-height: 37px;">今日车辆实时进出记录</div>
+				<!--background: #DFF0D8;-->
+				<div style="overflow: auto;height:490px;border: 1px solid #DDDDDD;" id="searchItem">
+					<table id="keyCarTraceTable" class="table table-striped">
+						<thead>
+							<tr>
+								<th>车牌号</th>
+								<th>出入时间</th>
+								<th>出入状况</th>
+								<th>停车场</th>
+								<th>违章记录</th>
+								<th>重点布控</th>
+							</tr>
+						</thead>
+						<tbody id="keyCarTraceTBody">
+							<!--<tr>
+								<td>鄂A54321</td>
+								<td>2017-10-16 12:00:12</td>
+								<td>出口</td>
+								<td>xxx停车场</td>
+								<td>
+									<a>查看记录</a>
+								</td>
+								<td>
+									<div class="switch switch-mini" data-on-label="重点" data-off-label="普通" data-on="danger" data-off="primary">
+										<input type="checkbox" checked/>
+									</div>
+								</td>
+							</tr>-->
+						</tbody>
+					</table>
+				</div>
+				<div style="height: 35px;">
+					<div style="float: left;line-height: 35px;padding-left: 10px;">
+						<span>记录条数:</span>
+						<span id="keyTotalCount">0</span>
+					</div>
+					<div id="pagination2" class="pagination" style="float:right;text-align: center;margin-top: 6px;"></div>
+				</div>
+			</div>
+			<!---------------------------------------------------------------------------------------------------------------------------------->
+			<!--个人车辆历史记录-->
+			<div role="tabpanel" class="tab-pane" id="personalCar" style="height:557px;color: #fff;">
+				<!--<div style="height: 32px;font-size: 16px;margin: auto;line-height: 32px;border: 1px solid #DDDDDD;">
+					
+				</div>-->
+
+				<div class="input-group" style="margin: 2px 490px 2px 10px;">
+					<input id="keyword" type="text" class="form-control" style="height:25px;border-top-left-radius: 4px; border-bottom-left-radius: 4px;" placeholder="请输入车牌号">
+					<span class="input-group-btn" style="height:25px;">
+                        <button id="search" type="button" class="btn btn-default" style="padding: 3px 12px;font-size: 12px;">查询</button>
+                    	</span>
+				</div>
+
+				<!--background: #DFF0D8;-->
+				<div style="overflow: auto;height:485px;border: 1px solid #DDDDDD;" id="searchItem">
+					<table id="personalTable" class="table table-striped">
+						<thead>
+							<tr>
+								<th>车牌号</th>
+								<th>出入时间</th>
+								<th>出入状况</th>
+								<th>停车场</th>
+								<th>抓拍</th>
+								<th>其它</th>
+								<th>违章记录</th>
+							</tr>
+						</thead>
+						<tbody id="personalCarTraceTBody">
+							<!--<tr>
+								<td>鄂A54321</td>
+								<td>2017-10-16 12:00:12</td>
+								<td>出口</td>
+								<td>xxx停车场</td>
+								<td>
+									<img src="./img/carTrace/carNum.png" alt="车牌抓拍.png" />
+								</td>
+								<td>
+									<a>查看大图</a>
+								</td>
+								<td>
+									<a>查看记录</a>
+								</td>
+							</tr>-->
+						</tbody>
+					</table>
+				</div>
+				<div style="height: 35px;">
+					<div style="float: left;line-height: 35px;padding-left: 10px;">
+						<span>记录条数:</span>
+						<span id="totalCount">0</span>
+					</div>
+					<div id="pagination3" class="pagination" style="float:right;text-align: center;margin-top: 6px;"></div>
+				</div>
+			</div>
+			<!-- 车次统计 -->
+			<div role="tabpanel" class="tab-pane" id="calenderlCar"  style="width:780px;height:557px;color: #fff;">
+				<div id="calenderMain" style="overflow: auto;height:300px;border: 1px solid #DDDDDD; width:780px;height:550px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!------------------------------------------------------------------------------------------------------------------------->
+<!-- 点击查看大图弹出的小窗photoHeader--> 
+<div id="divCenter" align="center" style="position: absolute; z-index: 9; display: none; width:460px; height:500px;bottom:10px;left:100px;background: rgba(8,24,50,1);box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);border-style: solid;border-width: 5px;border-image: url(./img/bg_border.png) 5 fill / 1 / 0 stretch;">
+	<div id="photoHeader" style="width:100%;height:30px;top: 0px;left: 0px;float: top;">
+		<h5 style="float: left;color: #fff;margin-left: 10px;">查看大图</h5>
+		<button type="button" class="close" style="width: 24px;height: 24px;margin:3px;font-size: 20px;font-weight: normal" id="photoClose">×</button>
+	</div>
+	<!--<div style="position:absolute;width:70px;bottom: 20px;left:50%;transform: translate(-50%);display: none;">
+		<img id="min" src="./img/carTrace/min.png" alt="还原" style="float: left;" />
+		<img id="max" src="./img/carTrace/max.png" alt="放大" style="float: left;" />
+		<img id="close" src="./img/carTrace/close.png" alt="返回" style="float: right;" />
+	</div>-->
+	<img src="./img/carTrace/carDetail.png" style="height: 455px;width:100%;background: none;" id="carDetailImg" />
+	<table style="position:relative;bottom:160px;margin: 0 20px;font-size: 10px;color: #fff;border-collapse:separate; border-spacing:0px 10px;">
+		<tr>
+			<td>驾驶证号:</td>
+			<td>340106195603123156</td>
+		</tr>
+		<tr>
+			<td>驾驶人:</td>
+			<td>崔尧红</td>
+		</tr>
+		<tr>
+			<td>车辆类型:</td>
+			<td>小型轿车</td>
+		</tr>
+		<tr>
+			<td>车辆颜色:</td>
+			<td>白色</td>
+		</tr>
+		<tr>
+			<td>发证日期:</td>
+			<td>2018-05-06 12:00:23</td>
+		</tr>
+	</table>
+</div>
+
+<!--------------------------------------------------------------------------------------------------------------------------------->
+<!--违章记录-->
+<div role="tabpanel" class="tab-pane active" id="breakRecord" style="position: absolute;display: none;width:460px;height:500px;bottom: 10px;left:100px;background: rgba(8,24,50,1);box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);border-style: solid;border-width: 5px;border-image: url(./img/bg_border.png) 5 fill / 1 / 0 stretch;">
+	<div id="breakRulesHeader" style="width:100%;height:30px;top: 0px;left: 0px;float: top;">
+		<h5 style="float: left;color: #fff;margin-left: 10px;">违章信息</h5>
+		<button type="button" class="close" style="width: 24px;height: 24px;margin:3px;font-size: 20px;font-weight: normal" id="breakRulesClose">×</button>
+	</div>
+	<!--<div id="breakRecordNumber" style="height: 32px;width: 200px;font-size: 16px;margin: auto;line-height: 37px;">鄂A54321, 车辆违章信息</div>-->
+	<!--background: #DFF0D8;-->
+	<div style="width:100%;height: 420px;overflow: auto;color: #fff;">
+		<table id="cxyTable" class="table table-striped">
+			<thead>
+				<tr>
+					<th>违章编号</th>
+					<th>违章时间</th>
+					<th>违章分数</th>
+				</tr>
+			</thead>
+			<tbody id="cxyTBody">
+				<tr>
+					<td>340106195603123156</td>
+					<td>2018-10-13 16:03:17</td>
+					<td>1</td>
+				</tr>
+				<tr>
+					<td>340106195603123156</td>
+					<td>2018-10-12 09:53:12</td>
+					<td>1</td>
+				</tr>
+				<tr>
+					<td>340106195603123156</td>
+					<td>2018-6-16 22:00:46</td>
+					<td>1</td>
+				</tr>
+				<tr>
+					<td>340106195603123156</td>
+					<td>2018-5-27 12:00:12</td>
+					<td>1</td>
+				</tr>
+				<tr>
+					<td>340106195603123156</td>
+					<td>2018-5-16 09:34:13</td>
+					<td>2</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div style="height: 35px;">
+		<div style="position:relative;bottom:5px;float: left;line-height: 35px;padding-left: 10px;">
+			<span>记录条数:</span>
+			<span id="totalCount">0</span>
+		</div>
+		<div id="pagination3-2" class="pagination" style="float:right;text-align: center;margin-top: 6px;"></div>
+	</div>
+	<!--<div style="width: 36px;margin: 0 auto;">
+		<img id="breakRecordReturn" src="./img/carTrace/close-black.png" alt="返回" />
+	</div>-->
+</div>

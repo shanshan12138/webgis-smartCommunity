@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>人脸识别测试</title>
+		<script src="../../jquery.min.3.2.1.js"></script>
+		<link rel="stylesheet" href="../../bootstrap-3.3.7/css/bootstrap.min.css" />
+		<script src="../../bootstrap-3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="../../../css/pretty.css" />
+	</head>
+
+	<body style="width:100%;height:100%;margin: 0px;padding: 0px;background:#28A4C9">
+		<button id="test">测试</button>
+		<!-- 模态框（Modal） -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content" style="width:740px;background-color:rgba(30,30,30,0.5);color:#fff" box-shadow: none;>
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">人脸识别</h4>
+					</div>
+					<div class="modal-body">
+						<!--添加页卡-->
+						<ul id="myTab" class="nav nav-tabs" style="font-size: 8px;">
+							<li class="active">
+								<a href="#home" data-toggle="tab" style="color: #000;">
+									识别结果
+								</a>
+							</li>
+							<li>
+								<a href="#ios" data-toggle="tab" style="color: #000;">查询识别结果</a>
+							</li>
+							
+						</ul>
+						<div id="myTabContent" class="tab-content">
+							<!--页卡1-->
+							<div class="tab-pane fade in active" id="home">
+								<div style="margin: 5px;">
+									开始时间:<input type="text" value="2012-05-15 21:05" id="datetimepicker" style="width:120px;background-color: rgba(0,0,0,0);margin-right:10px;border: 1px bridge;"> 截止时间:
+									<input type="text" value="2012-05-15 21:05" id="datetimepicker" style="width:120px;background-color: rgba(0,0,0,0);border: 1px bridge;">
+								</div>
+								<div pre-scrollable style="height: 380px;overflow-y: auto;">
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+							<!--页卡2-->
+							<div class="tab-pane fade" id="ios">
+								<div style="margin: 5px;">
+									开始时间:<input type="text" value="2012-05-15 21:05" id="datetimepicker" style="width:120px;background-color: rgba(0,0,0,0);margin-right:10px;border: 1px bridge;"> 截止时间:
+									<input type="text" value="2012-05-15 21:05" id="datetimepicker" style="width:120px;background-color: rgba(0,0,0,0);margin-right:20px;border: 1px bridge;"> 待搜索姓名:
+									<input type="text" />
+									<button class="btn-primary">查询</button>
+								</div>
+								<div pre-scrollable style="height: 380px;overflow-y: auto;">
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;border-bottom: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;border-bottom: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;border-bottom: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;border-bottom: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;border-bottom: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									<div style="float:left;width: 225px;height: 375px;margin: 2px 1px;border-left: 2px solid orangered;border-bottom: 2px solid orangered;text-align: center;">
+										<img style="width: 200px;height: 200px;border: 2px solid orangered;border-radius: 15px;" src="../../../img/faceRecognition/face.png" />
+										<table style="text-align: left;margin: 20px 5px">
+											<tr>
+												<td>姓名: </td>
+												<td>刘某某</td>
+											</tr>
+											<tr>
+												<td>身份证号: </td>
+												<td>420106197423321284</td>
+											</tr>
+											<tr>
+												<td>相似度: </td>
+												<td>97.023854736215152</td>
+											</tr>
+											<tr>
+												<td>发现时间: </td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+											<tr>
+												<td>拍摄位置: </td>
+												<td>光谷理想城西门2</td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>2017-12-23 21:00:23</td>
+											</tr>
+										</table>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary">提交更改</button>
+					</div>-->
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
+
+		<script>
+			$("#test").on("click", function() {
+				$('#myModal').modal({
+					backdrop: false
+				})
+				$("#myModal").modal("show");
+			});
+		</script>
+	</body>
+
+</html>

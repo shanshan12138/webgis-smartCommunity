@@ -1,0 +1,50 @@
+/*登录界面css样式*/
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+body {
+	font-family: "华文细黑";
+	background: url("../../img/login/bg.jpg") no-repeat;
+	background-size: 100% 100%;
+}
+
+/*输入框颜色 start*/
+input::-webkit-input-placeholder {
+	color: #FFF;
+}
+
+input::-moz-placeholder {
+	/* Mozilla Firefox 19+ */
+	color: #FFF;
+}
+
+input:-moz-placeholder {
+	/* Mozilla Firefox 4 to 18 */
+	color: #FFF;
+}
+
+input:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	color: #FFF;
+}
+
+/*输入框颜色 end*/
+
+.login {
+	width: 600px;
+	height: 400px;
+	/* 垂直居中 */
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}

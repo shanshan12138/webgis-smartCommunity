@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id='box' style="position:absolute;width:100px;height:100px;background-color:'#ee735c'">
+			<div>可拖动div元素</div>
+		</div>
+
+		<script>
+			var oDiv = document.getElementById('box')
+			oDiv.onmousedown = function(ev) {
+				var disX = ev.clientX - oDiv.offsetLeft
+				var disY = ev.clientY - oDiv.offsetTop
+
+				document.onmousemove = function(ev) {
+					var l = ev.clientX - disX
+					var t = ev.clientY - disY
+
+					oDiv.style.left = l + 'px'
+					oDiv.style.top = t + 'px'
+				}
+				document.onmouseup = function() {
+					document.onmousemove = null;
+					document.onmouseup = null
+				}
+			}
+		</script>
+	</body>
+
+</html>

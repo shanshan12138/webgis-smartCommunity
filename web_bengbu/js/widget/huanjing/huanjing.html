@@ -1,0 +1,102 @@
+<!--综合查询-->
+<style>
+	.box1{
+		width: 158px;
+	}
+	.box1 .white{
+		margin:2px 0 0 26px ;
+		font-size: 18px;
+		color: white;
+	}
+	.box1 .blue{
+		width: 80px;
+		background-color: #1fe2ff;
+		padding: 5px 20px;
+		font-size: 12px;
+		color: white;
+		margin: 5px 0 10px 30px ;
+		border-radius: 5px;
+	}
+	.box2{
+		margin-top: 20px;
+		width: 110px;
+	}
+	.item p{
+		font-size: 12px;
+		text-align: center;
+	}
+	#main1{
+		margin: 3px 6px;
+		width: 120px;
+		height: 120px;
+	}
+	#main2, #main3, #main4, #main5, #main6, #main7{
+		margin:0 6px;
+		width: 80px;
+		height: 80px;
+	}
+	.item{
+		margin-bottom: 20px;
+	}
+	.fl{
+		float: left;
+	}
+	.clear{
+		clear: both;
+	}
+</style>
+<div id="container-searchContent" style="position:absolute;bottom:20px;right:2px;width:500px;height:300px;background: rgba(8,24,50,0.7);box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);border-style: solid;border-width: 5px;border-image: url(./img/bg_border.png) 5 fill / 1 / 0 stretch;">
+	<div id="yijiansouHeader" style="width:100%;height:40px;top: 0px;left: 0px;float: top;">
+		<h4 style="float: left;color: #fff;margin-left: 10px;font-size: 16px;">环境监测</h4>
+		<span id="deviceId" style="display: none;"></span>
+		<button type="button" class="close" style="width: 30px;height: 30px;margin:3px;font-size: 32px;font-weight: normal;color: white;"
+		 id="searchClose">&times;</button>
+	</div>
+	<div class="analy-body" id="analy-body" style="height:590px;margin-bottom: 0px;height: 600px;background: none;">
+		<!-- 面板区 -->
+		<div id="tab_panel" class="tab-content" style="color: #fff;">
+			<div class="box1 fl">
+				<p class="white">室外PM2.5</p>
+				<p class="blue">1#室外</p>
+				<div id="main1"></div>
+			</div>
+
+			<div class="box2 fl">
+				<div class="item">
+					<div id="main2"></div>
+					<p>温度(℃)</p>
+				</div>
+				<div class="item">
+					<div id="main3"></div>
+					<p>噪音(db)</p>
+				</div>
+			</div>
+			
+			<div class="box2 fl">
+				<div class="item">
+					<div id="main4"></div>
+					<p>湿度(%)</p>
+				</div>
+				<div class="item">
+					<div id="main5"></div>
+					<p>风速(m/s)</p>
+				</div>
+			</div>
+			
+			<div class="box2 fl">
+				<div class="item">
+					<div id="main6"></div>
+					<p>PM10(μg/m3)</p>
+				</div>
+				<div class="item">
+					<div id="main7"></div>
+					<p>风向</p>
+				</div>
+			</div>
+			
+			<div class="clear"></div>
+
+
+		</div>
+	</div>
+</div>

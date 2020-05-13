@@ -1,0 +1,144 @@
+/*模块容器*/
+.widget-container{
+	position:absolute;
+	background: rgba(8,24,50,0.7);
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+	border-style: solid;
+	border-width: 5px;
+	border-image: url(../img/bg_border.png) 5 fill / 1 / 0 stretch;
+}
+/*左上角布局*/
+.position-tl{
+	top:80px;
+	left:20px;
+}
+/*左下角布局*/
+.position-bl{
+	bottom:20px;
+	left:20px;		
+}
+/*右上角布局*/
+.position-tr{
+	top:80px;
+	right: 20px;	
+}
+/*右下角布局*/
+.position-br{
+	bottom:20px;
+	right: 20px;
+}
+
+/*表格样式*/
+.mTable tbody {
+	display: block;
+	height: 510px;
+	overflow-y: scroll;
+}
+
+.mTable thead,
+.mTable tbody tr {
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+}
+
+.mTable thead {
+	width: calc( 100% - 1em)
+}
+
+.mTable tbody tr .focus {
+	background-color: #ff0000;
+}
+
+/*模块-测量工具*/
+
+/*按钮*/
+.analysisBtn{user-select: none;cursor: default;height: 30px;border-radius: 3px;background: #00BAFF;color: #fff;text-align: center;line-height: 30px;margin:15px;}
+.analysisBtn.disabled{background:#c0c0c0;cursor:not-allowed;}
+.analysisBtn:hover{background:#00a1dc}
+.analysisBtn.disabled:hover{background:#c0c0c0;}
+.analysisBtn.cancel{background:#e3e3e3;color:#333;}
+.analysisBtn.cancel:hover{background:#cdcdcd;}
+
+/*空间距离*/
+.measure-item{line-height: 30px;cursor:pointer;padding:0 15px;}
+.measure-item i{margin-right:5px;vertical-align: text-bottom;display:inline-block;width: 14px;height: 14px;background: url("../img/measure/icon-distance.png") center no-repeat;}
+.measure-item:hover{background-color:rgba(200,200,200,.5);}
+/*空间面积*/
+.measure-item{line-height: 30px;cursor:pointer;padding:0 15px;}
+.measure-item i{margin-right:5px;vertical-align: text-bottom;display:inline-block;width: 14px;height: 14px;background: url("../img/measure/icon-area.png") center no-repeat;}
+.measure-item:hover{background-color:rgba(200,200,200,.5);}
+/*三角测量*/
+.measure-item{line-height: 30px;cursor:pointer;padding:0 15px;}
+.measure-item i{margin-right:5px;vertical-align: text-bottom;display:inline-block;width: 14px;height: 14px;background: url("../img/measure/icon-triangle.png") center no-repeat;}
+.measure-item:hover{background-color:rgba(200,200,200,.5);}
+/*坐标测量*/
+.measure-item{line-height: 30px;cursor:pointer;padding:0 15px;}
+.measure-item i{margin-right:5px;vertical-align: text-bottom;display:inline-block;width: 14px;height: 14px;background: url("../img/measure/icon-coordinate.png") center no-repeat;}
+.measure-item:hover{background-color:rgba(200,200,200,.5);}
+
+.comment-container .comment-body .measureItem{height:26px;width:100%;padding:0 20px;box-sizing:border-box;margin-bottom:8px;}
+.comment-container .measureItem i{height:16px;width:16px;display:inline-block;float:left;margin-top:5px;margin-right:5px;background-image:url(../manage/images/icon-measure.png);}
+.comment-container .measureItem i.distance{background-position:0 0;}
+.comment-container .measureItem i.area{background-position:0 -16px;}
+.comment-container .measureItem i.triangle{background-position:0 -32px;}
+.comment-container .measureItem i.coordinate{background-position:0 -48px;}
+.comment-container .measureItem span{display:inline-block;height:16px;line-height:16px;font-size:12px;color:#FEFEFE;float:left;margin-top:5px;}
+.comment-container .comment-body .measureItem.active span{color:#FFF;}
+.comment-container .comment-body .measureItem:hover,.comment-container .comment-body .measureItem.active{background:rgba(255, 255, 255, 0.4);}
+
+
+/*人脸*/
+.faceItem {
+	float: left;
+	width: 220px;
+	height: 300px;
+	margin: 5px 3px;
+	/*outline: 2px solid orangered;*/
+	border: solid 1px;
+    border-radius: 5px;
+	text-align: center;
+}
+.imgBox {
+	width: 180px;
+	height: 180px;
+	margin:2px auto;
+	background: url("../img/faceRecognition/not_found.jpg") no-repeat;
+	background-size: cover;
+}
+.faceItem:hover {
+	background: rgba(34,34,34,0.5);
+	color: #fff;
+}
+
+/*日照分析*/
+/*#timeGet{opacity:0;z-index:1;position:absolute;bottom:10px;left: calc(50% - 364px);display: flex;justify-content: space-between;}
+#timeGet.show{visibility: visible;}
+
+.dayContral{z-index:1;position:relative;display: inline-block;height: 56px;width: 150px;border-radius: 3px;overflow: hidden;background:rgba(0,0,0,.7);margin-right:5px;cursor:pointer;}
+.dayContral i{display: inline-block;margin: 16px 17px;height: 24px;width:22px;background: url("../images/calendar.png");background-position: 0 0;}
+.dayContral i:hover{background-position: 0 24px;}
+
+@media(-webkit-max-device-pixel-ratio: 1) {
+    ::-webkit-scrollbar-track-piece {
+        background-color: rgba(255,255,255,0.3);
+        border-radius:6px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 6px;
+
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(93,26,211,0.75);
+        background-clip: padding-box;
+        min-height: 28px;
+        border-radius:5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color:rgba(93,26,211,1)
+    }
+}*/

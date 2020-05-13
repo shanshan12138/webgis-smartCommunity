@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+/*头部*/
+#nav-header{position:absolute;width:100%;height:60px;top:0px;margin:0 auto;background: #3C8DBC;}
+/*头部图标*/
+#nav-header .index-icon{width:450px;height:60px;margin-left: 20px;float:left;background:url(../../img/index-icon.png) no-repeat center left;}
+/*头部标题*/
+#nav-header .project-title{font-size: 24px;color: #FFF;margin-left: 50px;line-height: 60px;}
+
+#nav-header a{text-decoration:none;}
+
+#nav-menu {width:auto!important;height:60px;float:left;margin-top:0px;position:relative;}
+#nav-menu li{float:left;padding-left:10px;padding-right:10px;height:60px;position:relative;margin-top:0px;text-align: center;font-size: 16px;list-style-type:none;}
+
+/*头部菜单中a标签的位置*/
+#nav-menu li a:link {color:#FFF;font-weight:500;letter-spacing:2px;height:60px;line-height:60px;}
+
+/*鼠标指向头部菜单时,显示深蓝效果,且顶部有橘黄色 border-top: 5px solid #DF9D00;*/
+#nav-menu li.navmoon{background:#367FA9;padding-left:10px;padding-right:10px;height:60px;line-height:60px;border-top: 5px solid #DF9D00;}
+/*鼠标指向头部菜单时, 头部菜单中a标签以及下拉菜单中a标签显示的颜色*/
+#nav-menu li.navmoon a{color:#FFF;}
+
+
+/*下拉菜单样式*/
+#nav-menu li ul{display:none;position:absolute;top: 55px;background:#367FA9;padding-left:0px;left:0px;}
+#nav-menu li.navmoon ul{display:block;}
+/*下拉菜单内li样式(一个li代表一个选项)*/
+#nav-menu li ul li{display:block;width:160px;float:none;position:relative;height:35px;line-height:35px;overflow:hidden;padding-left: 0px;}
+
+/*下拉菜单内li选项内a标签样式*/
+#nav-menu li.navmoon ul a{display:block;width:160px;height:35px;line-height:35px;font-size: 14px;}
+/*下拉菜单内li选项内a标签样式, 鼠标停靠时的效果*/
+#nav-menu li.navmoon ul a:hover{color:#FFF;background:#2F5975;}
+
+
+
+

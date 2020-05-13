@@ -1,0 +1,927 @@
+<!--综合查询-->
+<!--<div id="searchContent" style="position:absolute;bottom:2px;right:2px;width:810px;height:640px;background: #3C8DBC;display: block;box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);">-->
+<div id="container-searchContent" style="position:absolute;bottom:20px;left:10px;width:810px;height:640px;background: rgba(8,24,50,0.7);box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);border-style: solid;border-width: 5px;border-image: url(./img/bg_border.png) 5 fill / 1 / 0 stretch;">
+	<div id="yijiansouHeader" style="width:100%;height:40px;top: 0px;left: 0px;float: top;">
+		<h4 style="float: left;color: #fff;margin-left: 10px;">综合查询</h4>
+		<span id="deviceId" style="display: none;"></span>
+		<button type="button" class="close" style="width: 30px;height: 30px;margin:3px;font-size: 32px;font-weight: normal;color: white;" id="searchClose">&times;</button>
+	</div>
+	<div class="analy-body" id="analy-body" style="height:590px;margin-bottom: 0px;height: 600px;background: none;">
+
+		<!-- 导航区 -->
+		<ul id="carTraceTab" class="nav nav-tabs" role="tablist">
+			<li name="mYijiansou" class="active" role="presentation">
+				<a href="#mYijiansou" role="tab" data-toggle="tab">一键搜</a>
+			</li>
+			<li name="personSearch" role="presentation">
+				<a href="#personSearch" role="tab" data-toggle="tab">人员查询</a>
+			</li>
+			<li name="houseSearch" role="presentation">
+				<a href="#houseSearch" role="tab" data-toggle="tab">房屋查询</a>
+			</li>
+			<li name="houseRent" role="presentation">
+				<a href="#houseRent" role="tab" data-toggle="tab">房屋租赁</a>
+			</li>
+		</ul>
+
+		<!-- 面板区 -->
+		<div id="tab_panel" class="tab-content" style="color: #fff;">
+			<!--一键搜-->
+			<div role="tabpanel" class="tab-pane active" id="mYijiansou" style="height:557px;overflow: hidden;">
+				<div id="searchHead" style="padding: 120px 100px 10px 100px;text-align: center;top: 0px;">
+					<h1 id="searchTitle">智慧平安小区一键搜</h1>
+					<div class="input-group">
+						<input type="text" class="form-control" style="border-top-left-radius: 4px; border-bottom-left-radius: 4px;" placeholder="请输入查询信息" id="keyword">
+						<span class="input-group-btn">
+                        	<button type="button" class="btn btn-default"  id="yijiansouSearch">查询</button>
+                    	</span>
+					</div>
+				</div>
+
+				<div id="searchItem" style="padding: 0px 10px 0px 37px;overflow: auto;width:800px;height: 460px;display: none;">
+
+				</div>
+
+				<div id="searchPage" style="padding: 0px 100px 10px 100px;text-align: center;display: none;">
+					记录条数: <span id="total"></span>
+					<div id="pagination" class="pagination"></div>
+				</div>
+			</div>
+			<!-------------------------------------------------------------------------------------------------------------------------->
+			<!--人员查询-->
+			<div role="tabpanel" class="tab-pane" id="personSearch" style="height: 550px;">
+				<!--查询条件-->
+				<div style="height: 100px;margin:5px;border:1px solid #AAAAAA;border-radius:5px;">
+					<label>查询条件</label>
+					<table id="person_sreach_condition" style="width: 100%;border-collapse:separate; border-spacing:10px;font-size: 10px;">
+						<tr>
+							<td>
+								<tt>开始日期：</tt>
+								<input id="searchTimeStart" class="Wdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang: 'zh-cn', skin: 'twoer'})" style="color: #000;margin-right: 10px;border: none;border-radius: 3px;" />
+							</td>
+							<td>
+								<tt>出入状况：</tt>
+								<select style="width: 135px;height: 23px;color: #000;border:1px solid #AAA;border: none;border-radius: 3px;">
+									<option value="all">全部</option>
+									<option value="in">进入</option>
+									<option value="out">外出</option>
+								</select>
+							</td>
+							<td>
+								<tt>查询姓名：</tt>
+								<input id="psName" style="border: none;border-radius: 3px;color: #000;">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<tt>结束日期：</tt>
+								<input id="searchTimeEnd" class="Wdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',lang: 'zh-cn', skin: 'twoer'})" style="color: #000;margin-right: 10px;border: none;border-radius: 3px;" />
+								<td>
+									<tt>打卡位置：</tt>
+									<select style="width: 135px;height: 23px;color: #000;border:1px solid #AAA;border: none;border-radius: 3px;">
+										<option value=""></option>
+										<option value="east">东门</option>
+										<option value="west">西门</option>
+										<option value="south">南门</option>
+										<option value="north">北门</option>
+									</select>
+								</td>
+								<td>
+									<button id="searchPerson" type="button" class="btn-primary" style="float:right;width:70px;margin-right:46px;border: none;border-radius: 3px;">查询</button>
+								</td>
+						</tr>
+					</table>
+				</div>
+				<div style="height: 435px;margin:0px 5px 5px 5px;">
+					<!--个人信息-->
+					<div style="float: left;height:435px;width:220px;margin-right:10px;border:1px solid #AAAAAA;border-radius:5px;text-align: center;">
+						<label style="width:100%;text-align: left;">个人详细信息</label>
+						<img src="./img/yijiansou/head.png" alt="头像信息" style="height:120px;width:120px;margin:auto" />
+						<table style="width:100%;height:265px;border-collapse:separate; border-spacing:1px;font-size: 12px;">
+							<tr>
+								<td><tt>姓名:</tt></td>
+								<td>
+									<input id="pdName" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>性别:</tt></td>
+								<td>
+									<input id="pdSex" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>年龄:</tt></td>
+								<td>
+									<input id="pdAge" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>门禁卡数:</tt></td>
+								<td>
+									<input id="pdDoorCardCount" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>门禁卡号:</tt></td>
+								<td>
+									<input id="pdDoorCardNum" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>身份证号:</tt></td>
+								<td>
+									<input id="pdIdentityNum" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>登陆时间:</tt></td>
+								<td>
+									<input id="pdLoginTime" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>户籍地址:</tt></td>
+								<td>
+									<textarea id="pdAddress" rows="2" cols="18" style="border: none;border-radius: 3px;color: #000;"></textarea>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div style="float: right;height:435px;width:560px;">
+						<!--住房信息-->
+						<div style="float: top;width:100%;height:120px;margin-bottom:5px;border:1px solid #AAAAAA;border-radius:5px;">
+							<label>住房信息</label>
+							<table style="width: 100%;height:100px;border-collapse:separate; border-spacing:3px;padding:5px;font-size: 10px;">
+								<tr>
+									<td>
+										<tt>居住性质:</tt>
+										<input id="phType" style="width:120px;border: none;border-radius: 3px;color: #000;">
+									</td>
+									<td>
+										<tt>登记房屋:</tt>
+										<input id="phHouse" style="width:260px;border: none;border-radius: 3px;color: #000;">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<tt>户主:&nbsp;&nbsp;</tt>
+										<input id="phAgentName" style="width:120px;border: none;border-radius: 3px;color: #000;">
+									</td>
+									<td>
+										<tt>电话:&nbsp;&nbsp;</tt>
+										<input id="phPhone" style="width:260px;border: none;border-radius: 3px;color: #000;">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<tt>重点布控:</tt>
+										<div id="phMContainer" class="switch switch-mini" data-on-label="重点" data-off-label="普通" data-on="danger" data-off="primary">
+											<input id="phMonitoring" type="checkbox" />
+										</div>
+									</td>
+									<td>
+										<tt>身份证号:</tt>
+										<input id="phIdentityNum" style="width:260px;border: none;border-radius: 3px;color: #000;">
+									</td>
+								</tr>
+							</table>
+						</div>
+						<!--个人打卡记录-->
+						<div style="width:100%;height:310px;border:1px solid #AAAAAA;border-radius:5px;">
+							<label>个人打卡记录</label>
+							<div style="width: 100%;height:260px;padding:5px;font-size: 10px;">
+								<div class="table-head">
+									<table border="1" style="border: 1px solid #AAAAAA;">
+										<colgroup>
+											<col style="width: 100px;" />
+											<col style="width: 140px;" />
+											<col style="width: 160px;" />
+											<col style="width: 65px;" />
+											<col style="width: 65px;" />
+										</colgroup>
+										<thead>
+											<tr>
+												<th>磁卡编号</th>
+												<th>打卡位置</th>
+												<th>出入时间</th>
+												<th>出入状况</th>
+												<th>出入凭证</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+								<div class="table-body" style="height: 240px;overflow: auto;">
+									<table>
+										<colgroup>
+											<col style="width: 100px;" />
+											<col style="width: 140px;" />
+											<col style="width: 160px;" />
+											<col style="width: 65px;" />
+											<col style="width: 65px;" />
+										</colgroup>
+										<tbody id="recordTBody">
+											<!--<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+											<tr>
+												<td>00000001</td>
+												<td>小区南门</td>
+												<td>2018年7月13日12时43分</td>
+												<td>外出</td>
+												<td>门卡</td>
+											</tr>
+										</tbody>-->
+									</table>
+								</div>
+							</div>
+							<span style="font-size: 10px;">记录条数:30</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!---------------------------------------------------------------------------------------------------------------------------------->
+			<!--房屋查询-->
+			<div role="tabpanel" class="tab-pane" id="houseSearch" style="height:557px;">
+				<div style="float: top;height: 180px;margin: 5px;">
+					<!--房屋查询条件-->
+					<div style="float: left;width:243px;height:100%;border-radius: 3px;border: 1px solid #AAAAAA;">
+						<label>房屋查询条件</label>
+						<table id="house_condition" style="width:100%;height: 160px;border-collapse:separate; border-spacing:3px;padding: 5px;font-size: 10px;">
+							<tr>
+								<td><tt>楼栋:</tt></td>
+								<td>
+									<select id="hsBuilding" style="width: 180px;height: 20px;border: none;border-radius: 3px;color: #000;">
+										<option value="0">选择楼栋</option>
+										<option id="" value="1">1</option>
+										<option id="" value="2">2</option>
+										<option id="" value="4">3</option>
+										<option id="" value="4">4</option>
+										<option id="" value="5">5</option>
+										<option id="" value="6">6</option>
+										<option id="" value="7">7</option>
+										<option id="" value="8">8</option>
+										<option id="" value="9">9</option>
+									</select>
+									<!-- <input id="hsBuilding" style="width: 180px;border: none;border-radius: 3px;color: #000;"> -->
+								</td>
+							</tr>
+							<tr>
+								<td><tt>单元:</tt></td>
+								<td>
+									<!-- <input id="hsUnit" style="width: 180px;border: none;border-radius: 3px;color: #000;"> -->
+									<select id="hsUnit" style="width: 180px;height: 20px;border: none;border-radius: 3px;color: #000;">
+										<option value="0">选择单元</option>
+										<option id="" value="1">1</option>
+										<option id="" value="2">2</option>
+										<option id="" value="4">3</option>
+										<option id="" value="4">4</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td><tt>楼层:</tt></td>
+								<td>
+									<!-- <input id="hsFloor" style="width: 180px;border: none;border-radius: 3px;color: #000;"> -->
+									<select id="hsFloor" style="width: 180px;height: 20px;border: none;border-radius: 3px;color: #000;">
+										<option value="0">选择楼层</option>
+										<option id="" value="1">1</option>
+										<option id="" value="2">2</option>
+										<option id="" value="4">3</option>
+										<option id="" value="4">4</option>
+										<option id="" value="1">5</option>
+										<option id="" value="2">6</option>
+										<option id="" value="4">7</option>
+										<option id="" value="4">8</option>
+										<option id="" value="1">9</option>
+										<option id="" value="2">10</option>
+										<option id="" value="4">11</option>
+										<option id="" value="4">12</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td><tt>房间:</tt></td>
+								<td>
+									<input id="hsDoor" placeholder="输入房间号 例:10101" style="width: 180px;border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<button id="hsSearch" type="button" class="btn-primary" style="float:right;width:70px;margin-right:14px;border: none;border-radius: 3px;color: #fff;">查询</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<!--房屋权属信息-->
+					<div style="float: right;width:540px;height:100%;border-radius: 3px;border: 1px solid #AAAAAA;">
+						<label>房屋权属信息</label>
+						<div>
+							<tt style="float: left;margin-left: 15px;font-size: 10px;"> <br>房<br>屋<br>二<br>维<br>码<br></tt>
+							<div style="float:left;width: 140px;height:140px;margin-left: 20px;margin-right: 30px;">
+								<img id="code_img" src="./img/yijiansou/code.png" alt="头像信息" style="float:left;height:140px;width:140px;margin-left:auto;margin-right:auto;display: none;" />
+							</div>
+							<table id="house_info" style="float:right;width:300px;height: 140px;font-size: 10px;">
+								<tr>
+									<td><tt>户主:</tt></td>
+									<td>
+										<input id="hdName" style="width: 200px;border: none;border-radius: 3px;color: #000;">
+									</td>
+								</tr>
+								<tr>
+									<td><tt>电话:</tt></td>
+									<td>
+										<input id="hdPhone" style="width: 200px;border: none;border-radius: 3px;color: #000;">
+									</td>
+								</tr>
+								<tr>
+									<td><tt>身份证号:</tt></td>
+									<td>
+										<input id="hdIdentityNum" style="width: 200px;border: none;border-radius: 3px;color: #000;">
+									</td>
+								</tr>
+								<tr>
+									<td><tt>更新时间:</tt></td>
+									<td>
+										<input id="hdTime" style="width: 200px;border: none;border-radius: 3px;color: #000;">
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div style="height: 90px;margin: 0px 5px;border-radius: 3px;border: 1px solid #AAAAAA;">
+					<label>房屋数据统计</label>
+					<table id="house_statistics" style="width:100%;height: 60px;border-collapse:separate; border-spacing:3px;padding:5px;font-size: 10px;">
+						<tr>
+							<td><tt>现居住人口数量:</tt></td>
+							<td>
+								<input id="timestart" style="border: none;border-radius: 3px;color: #000;">
+							</td>
+							<td><tt>现绑定门禁卡数量:</tt></td>
+							<td>
+								<input id="timestart" style="border: none;border-radius: 3px;color: #000;">
+							</td>
+							<td><tt>已退租人口数量:</tt></td>
+							<td>
+								<input id="timestart" style="border: none;border-radius: 3px;color: #000;">
+							</td>
+						</tr>
+						<tr>
+							<td><tt>现流动人口数量:</tt></td>
+							<td>
+								<input id="timestart" style="border: none;border-radius: 3px;color: #000;">
+							</td>
+							<td><tt>重点监控人口数量:</tt></td>
+							<td>
+								<input id="timestart" style="border: none;border-radius: 3px;color: #000;">
+							</td>
+							<td colspan="2">
+								<div style="float: right;margin-right: 18px;">
+									<a href="javascript:void(0)" id="yongdianliang">查看用电量</a>&nbsp;&nbsp;
+									<a href="javascript:void(0)" id="checkHuxingtu">查看户型图</a>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!--房屋住房信息-->
+				<div style="height:260px;margin-top:5px;margin: 5px;border-radius: 3px;border: 1px solid #AAAAAA;font-size: 10px;">
+					<label>房屋住房信息</label>
+					<div style="width: 100%;padding:5px;">
+						<div class="table-head">
+							<table border="1" style="border: 1px solid #AAAAAA;">
+								<colgroup>
+									<col style="width:64px;" />
+									<col style="width:41px;" />
+									<col style="width:41px;" />
+									<col style="width:70px;" />
+									<col style="width:77px;" />
+									<col style="width:77px;" />
+									<col style="width:65px;" />
+									<col style="width:65px;" />
+									<col style="width:73px;" />
+									<col style="width:185px;" />
+								</colgroup>
+								<thead>
+									<th>姓名</th>
+									<th>性别</th>
+									<th>年龄</th>
+									<th>门禁卡号</th>
+									<th>门禁卡状态</th>
+									<th>现居住情况</th>
+									<th>人口类型</th>
+									<th>监控类型</th>
+									<th>电话</th>
+									<th>户籍地址</th>
+								</thead>
+							</table>
+						</div>
+						<div class="table-body" style="height: 210px;overflow: auto;">
+							<table style="width:765px;table-layout:fixed;">
+								<colgroup>
+									<col style="width:64px;" />
+									<col style="width:41px;" />
+									<col style="width:41px;" />
+									<col style="width:70px;" />
+									<col style="width:77px;" />
+									<col style="width:77px;" />
+									<col style="width:65px;" />
+									<col style="width:65px;" />
+									<col style="width:73px;" />
+									<col style="width:185px;" />
+								</colgroup>
+								<tbody id="houseRelation">
+									<!--<tr>
+										<td style="overflow: hidden;">李沐霏</td>
+										<td style="overflow: hidden;">女</td>
+										<td style="overflow: hidden;">35</td>
+										<td style="overflow: hidden;">00003,14141,12313,1231231</td>
+										<td style="overflow: hidden;">正常</td>
+										<td style="overflow: hidden;">自住</td>
+										<td style="overflow: hidden;">正常</td>
+										<td style="overflow: hidden;">普通</td>
+										<td style="overflow: hidden;">17700000000</td>
+										<td style="overflow: hidden;">滨海沿海工业园区中山二路减排昌兴壹城洋房1幢101室</td>
+									</tr>-->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!---------------------------------------------------------------------------------------------------------------------------------->
+			<!--房屋租赁-->
+			<div role="tabpanel" class="tab-pane" id="houseRent" style="height:557px;">
+				<div style="float: top;height:250px;padding:5px;">
+					<!--左上-->
+					<div style="float: left;width: 265px;height:100%;border-radius:10px;border:1px solid #AAAAAA;">
+						<label>企业列表</label>
+						<table id="houseRentTable" style="width:100%;max-height:240px;border-collapse:separate; border-spacing:3px;padding:5px;">
+							<tr>
+								<td style="height: 30px;" id="company01">中百超市</td>
+							</tr>
+							<tr>
+								<td style="height: 30px;" id="company02">链家房产中介</td>
+							</tr>
+						</table>
+					</div>
+					<!--右上-->
+					<div style="float: right;width: 520px;height:100%;border-radius:10px;border:1px solid #AAAAAA;">
+						<label>住房信息</label>
+						<table style="width:100%;height:220px;font-size: 10px;border-collapse:separate; border-spacing:3px;padding:5px;">
+							<tr>
+								<td><tt>注册号:</tt></td>
+								<td>
+									<input id="zhucehao" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+								<td><tt>企业类型:</tt></td>
+								<td>
+									<input id="qiyeleixing" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>主体名称:</tt></td>
+								<td colspan="3">
+									<input id="zhutimingcheng" style="width:400px;border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>法人代表:</tt></td>
+								<td>
+									<input id="farendaibiao" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+								<td><tt>行政区划:</tt></td>
+								<td>
+									<input id="xingzhengquhua" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>成立日期:</tt></td>
+								<td>
+									<input id="chengliriqi" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+								<td><tt>注册资本:</tt></td>
+								<td>
+									<input id="timestart" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>企业状态:</tt></td>
+								<td>
+									<input id="qiyezhuangtai" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+								<td><tt>企业地址:</tt></td>
+								<td>
+									<input id="timestart" style="border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>经营范围:</tt></td>
+								<td colspan="3">
+									<textarea id="jingyingfanwei" rows="3" cols="61" style="border: none;border-radius: 3px;color: #000;"></textarea>
+								</td>
+							</tr>
+						</table>
+
+					</div>
+				</div>
+				<div style="height:300px;padding:0px 5px;">
+					<!--左下-->
+					<div style="float: left;width: 265px;height:100%;border-radius:10px;border:1px solid #AAAAAA;margin-right:1px;">
+						<label>法人详细信息</label>
+						<table style="width:100%;height:250px;border-collapse:separate; border-spacing:5px;font-size: 12px;">
+							<tr>
+								<td><tt>姓名:</tt></td>
+								<td>
+									<input id="xingming" style="width: 180px;border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>性别:</tt></td>
+								<td>
+									<input id="xingbie" style="width: 180px;border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>年龄:</tt></td>
+								<td>
+									<input id="nianling" style="width: 180px;border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>身份证号:</tt></td>
+								<td>
+									<input id="timestart" style="width: 180px;border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>联系电话:</tt></td>
+								<td>
+									<input id="lianxidianhua" style="width: 180px;border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>创建时间:</tt></td>
+								<td>
+									<input id="timestart" style="width: 180px;border: none;border-radius: 3px;color: #000;">
+								</td>
+							</tr>
+							<tr>
+								<td><tt>变更情况:</tt></td>
+								<td>
+									<textarea rows="2" cols="26" style="border: none;border-radius: 3px;color: #000;"></textarea>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<!--右下-->
+					<div style="float: right;width: 520px;height:100%;border-radius:10px;border:1px solid #AAAAAA;font-size: 10px;">
+						<label>员工信息</label>
+						<div style="width: 100%;height: 270px;padding:5px;">
+							<div class="table-head">
+								<table border="1" style="border:1px solid #AAAAAA;">
+									<colgroup>
+										<col style="width: 70px;" />
+										<col style="width: 130px;" />
+										<col style="width: 80px;" />
+										<col style="width: 60px;" />
+										<col style="width: 130px;" />
+									</colgroup>
+									<thead>
+										<tr>
+											<th>姓名</th>
+											<th>身份证号</th>
+											<th>电话</th>
+											<th>公司职务</th>
+											<th>入职时间</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<div class="table-body" style="height: 240px;overflow: auto;">
+								<table>
+									<colgroup>
+										<col style="width: 70px;" />
+										<col style="width: 130px;" />
+										<col style="width: 80px;" />
+										<col style="width: 60px;" />
+										<col style="width: 130px;" />
+									</colgroup>
+									<tbody>
+										<!--<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>
+										<tr>
+											<td>演若达多</td>
+											<td>130666199912121212</td>
+											<td>17700000000</td>
+											<td>员工</td>
+											<td>2018-04-04 12:12:30</td>
+										</tr>-->
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!--查看户型图-->
+	<div id="huxingtuContent" align="center" style="position: absolute; z-index: 9; display: none; width:460px; height:500px;bottom:10px;left:100px;background: rgba(8,24,50,1);box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);border-style: solid;border-width: 5px;border-image: url(./img/bg_border.png) 5 fill / 1 / 0 stretch;">
+		<div id="huxingtuHeader" style="width:100%;height:30px;top: 0px;left: 0px;float: top;">
+			<h5 style="float: left;color: #fff;margin-left: 10px;">户型图</h5>
+			<button type="button" class="close" style="width: 24px;height: 24px;margin:3px;font-size: 20px;font-weight: normal" id="photoClose">×</button>
+		</div>
+		<img src="./img/yijiansou/C1.jpg" style="height: 455px;width:100%;background: none;" id="huxingtu" />
+	</div>
+	
+	<!--用电量-->
+	<div id="yongdianliangContent" align="center" style="position: absolute; z-index: 9; display: none; width:460px; height:500px;bottom:10px;left:100px;background: rgba(8,24,50,1);box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);border-style: solid;border-width: 5px;border-image: url(./img/bg_border.png) 5 fill / 1 / 0 stretch;">
+		<div id="yongdianliangHeader" style="width:100%;height:30px;top: 0px;left: 0px;float: top;">
+			<h5 style="float: left;color: #fff;margin-left: 10px;">用电量</h5>
+			<button type="button" class="close" style="width: 24px;height: 24px;margin:3px;font-size: 20px;font-weight: normal" id="yongdianliangClose">×</button>
+		</div>
+		<div style="width: 400px;height: 455px;border: 1px;" id="yongdianliangChart" >
+			
+		</div>
+	</div>
+</div>

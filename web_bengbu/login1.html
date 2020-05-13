@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="js/bootstrap-3.3.7/css/bootstrap.min.css"/>
+		<style type="text/css">
+			body {
+				background-image: url(images/login-bg.jpg);
+				background-position: center 0;
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				background-size: 100% 100%;
+				/*background-size: cover;*/
+			}
+
+			.login {
+				width: 29.41vw;
+				height: 36.4vw;
+				position: absolute;
+				top: 7vw;
+				right: 4.34vw;
+			}
+
+			.register {
+				width: 29.41vw;
+				height: 23.31vw;
+				position: absolute;
+				top: 6.9vw;
+				right: 4.34vw;
+			}
+
+			.panel-heading {
+				color: #3197b9;
+				height: 3.09vw;
+				font-size: 1vw;
+				line-height: 3.09vw;
+				text-align: left;
+				padding-left: 1vw;
+			}
+
+			.panel-body label {
+				color: black;
+				line-height: 2.2vw;
+				font-size: 1vw;
+			}
+
+			.panel-body .btn {
+				width: 100%;
+				height: 3.38vw;
+				color: white;
+				background-color: #337AB7;
+				margin: 1vw 0 1.47vw 0;
+				padding-top:1.0vw;
+			}
+
+			.forget {
+				float: right;
+			}
+
+			.check {
+				padding-top: 1vw;
+				font-size: 1vw;
+			}
+
+			.title-name {
+				color: white;
+				float: left;
+				font-size: 40px;
+				margin: 100px 0 0 150px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1 class="title-name">蚌埠智慧社区</h1>
+		<!-- 登录 -->
+		<form action="" method="" class="login">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">登录</h3>
+				</div>
+				<div class="panel-body">
+					<label class="username">名字</label>
+					<input type="text" class="form-control" placeholder="请输入登录用户名">
+					<label class="passward">密码</label>
+					<input type="password" class="form-control" placeholder="请输入登陆密码">
+					<!-- <button type="submit" class="btn">登录</button> -->
+					<a href="NSLD.html" type="submit" class="btn">登录</a>
+					<a href="#" class="reg_account">注册账户</a>
+					<a href="#" class="forget">忘记密码</a>
+				</div>
+			</div>
+		</form>
+		<!-- 注册 -->
+		<!-- <form action="" method="" class="register">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">注册</h3>
+				</div>
+				<div class="panel-body">
+					<label class="username">账户</label>
+					<input type="text" class="form-control" placeholder="请输入登录用户名">
+					<label class="passward">密码</label>
+					<input type="password" class="form-control" placeholder="请输入登陆密码">
+					<label class="name">姓名</label>
+					<input type="text" class="form-control" placeholder="请输入姓名">
+					<label class="phone">手机</label>
+					<input type="password" class="form-control" placeholder="请输入手机号码">
+					<label class="check">
+						<input type="checkbox">同意本站用户协议
+					</label>
+					<button type="submit" class="btn">注册</button>
+					
+					<a href="#" class="login_account">登陆账户</a>
+					<a href="#" class="forget">忘记密码</a>
+				</div>
+			</div>
+		</form>
+ -->
+		<script src="lib/jquery-1.12.4.min.js"></script>
+		<script src="js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$('.login_account').click(function() {
+				$(this).parents('.register').css("display", "none");
+				$(this).parents('.register').siblings('.login').css("display", "block");
+			})
+			$('.reg_account').click(function() {
+				$(this).parents('.login').css("display", "none");
+				$(this).parents('.login').siblings('.register').css("display", "block");
+			})
+		</script>
+	</body>
+</html>

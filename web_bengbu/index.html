@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+		<link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico" />
+		<title>南山郦都·智慧社区</title>
+		<!--jquery库-->
+		<script src="./js/jquery.min.3.2.1.js"></script>
+		<!--cesium样式-->
+		<link rel="stylesheet" href="./js/Build/Cesium/Widgets/widgets.css" />
+		<!--bootstrap-->
+		<link rel="stylesheet" href="./js/bootstrap-3.3.7/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./js/bootstrap-switch/bootstrapSwitch.css" />
+
+		<link rel="stylesheet" href="./js/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="./js/Ionicons/css/ionicons.min.css" />
+		<link rel="stylesheet" href="./js/AdminLTE-2.3.8/css/AdminLTE.min.css" />
+		<link rel="stylesheet" href="./js/AdminLTE-2.3.8/css/skins/skin-blue.min.css" />
+
+		<!--一键搜分页-->
+		<link rel="stylesheet" href="./js/pagination/pagination.css" />
+		<!--单体化属性框弹出-->
+		<link rel="stylesheet" href="./css/pretty.css" />
+		<!--其它样式-->
+		<link rel="stylesheet" type="text/css" href="css/extends.css" />
+		<!--select控件-->
+		<link rel="stylesheet" href="./js/bootstrap-select/bootstrap-select.min.css" />
+
+		<script src="./js/supermap/SuperMap.Include.js"></script>
+
+		<link rel="stylesheet" href="js/bootstrap-datatimepicker/css/bootstrap-datetimepicker.min.css" />
+
+		<link rel="stylesheet" href="js/video-js-5.19.2/video-js.css" />
+
+		<!--<script src="js/utils/common.js"></script>-->
+
+	<!-- 	<link href="Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+		<link href="css/font-awesome.min.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/pretty.css" rel="stylesheet">
+		<script src="js/night/jquery.min.js"></script>
+		<script src="js/night/bootstrap.min.js"></script>
+		<script src="js/night/bootstrap-select.min.js"></script>
+		<script src="js/night/config.js"></script>
+		<script src="js/night/spectrum.js"></script>
+		<script type="text/javascript" src="js/night/require.min.js" data-main="js/main1"></script>
+ -->
+		<style>
+			/**
+			 * bootstrap表格样式修改(无线烟感)
+			 */
+
+			.table-striped>tbody>tr:nth-of-type(odd) {
+				background-color: rgba(80, 80, 80, 0.4);
+			}
+		</style>
+
+		<style>
+			/*.wrapper {
+				width: 100%;
+				min-height: 100%;
+				height: auto !important;
+				position: absolute;
+			}*/
+
+			/*地图浏览控件*/
+			.cesium-viewer-navigationContainer {
+				top: 50px;
+			}
+		</style>
+
+		<style type="text/css">
+			.nui-scroll {
+				/*            margin-left: 100px;
+            border: 1px solid #000;
+            width: 200px;
+            height: 500px;*/
+				overflow: auto;
+			}
+
+			.nui-scroll::-webkit-scrollbar {
+				width: 8px;
+				height: 8px;
+			}
+
+			/*正常情况下滑块的样式*/
+
+			.nui-scroll::-webkit-scrollbar-thumb {
+				background-color: rgba(0, 0, 0, .05);
+				border-radius: 10px;
+				-webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);
+			}
+
+			/*鼠标悬浮在该类指向的控件上时滑块的样式*/
+
+			.nui-scroll:hover::-webkit-scrollbar-thumb {
+				background-color: rgba(0, 0, 0, .2);
+				border-radius: 10px;
+				-webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);
+			}
+
+			/*鼠标悬浮在滑块上时滑块的样式*/
+
+			.nui-scroll::-webkit-scrollbar-thumb:hover {
+				background-color: rgba(0, 0, 0, .4);
+				-webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1);
+			}
+
+			/*正常时候的主干部分*/
+
+			.nui-scroll::-webkit-scrollbar-track {
+				border-radius: 10px;
+				-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+				background-color: white;
+			}
+
+			/*鼠标悬浮在滚动条上的主干部分*/
+
+			.nui-scroll::-webkit-scrollbar-track:hover {
+				-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .4);
+				background-color: rgba(0, 0, 0, .01);
+			}
+			.dropdown-menu {
+				min-width: 110px;
+			}
+		</style>
+
+	</head>
+
+	<body class="skin-blue sidebar-mini" data-spy="scroll" data-target="#scrollSpy">
+		<!-- ./wrapper -->
+		<div class="wrapper">
+			<!--头部导航-->
+			<header class="header-wrapper main-header icl-header">
+				<nav class="navbar navbar-static-top">
+					<div class="nav-header">
+						<div class="navbar-header">
+							<!--图标和标题-->
+							<a class="navbar-brand" target="_self" href="index.html" style="background:url(./img/index-icon.png) no-repeat center left;">
+								<!-- <span class="project-title vm" id="title" style="margin-left: 30px;">汉阳  &sdot;  智慧社区云平台</span> -->
+								<span class="project-title vm" id="title" style="margin-left: 30px;">南山郦都·智慧社区</span>
+							</a>
+							<div id="suffix-title"></div>
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"
+							 aria-expanded="false">
+								<i class="fa fa-bars"></i>
+							</button>
+						</div>
+						<div class="navbar-collapse navbar-custom-menu collapse" id="navbar-collapse" aria-expanded="false" style="height: 1px;">
+							<ul id="nav-menu" class="nav navbar-nav nav-header-example" style="font-size: 16px;margin-right: 50px;">
+								<!-- <li class="navbar-menu" id="3dwebgl-index">
+									<a class="center" target="_self" href="index.html">首页</a>
+								</li>
+								<li class="dropdown nav-dropdown-menu download-menu" id="3dwebgl-documentation">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span id="api" data-i18n="nav.lang._name">智能巡航</span>
+										<i class="fa fa-sort-down"></i>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="chart">小区概况</a>
+										</li>
+									</ul>
+								</li> -->
+								<li class="dropdown nav-dropdown-menu download-menu" id="3dwebgl-documentation">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span id="api" data-i18n="nav.lang._name">驾驶舱 </span>
+										<i class="fa fa-sort-down"></i>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="huanjing">环境监测</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="chart">人口统计</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="yijiansou">一键搜</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="faceRecognition">人脸识别</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="dynamicTrajectory">车辆轨迹</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="deviceAlert">设备报警</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown nav-dropdown-menu download-menu" id="3dwebgl-documentation">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span id="api" data-i18n="nav.lang._name">快速查询</span>
+										<i class="fa fa-sort-down"></i>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="yijiansou">综合查询</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="doorContact">门磁报警</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="cover">井盖报警</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="smokeDetector">烟感报警</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="fireHydrant">消防栓</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown nav-dropdown-menu download-menu" id="3dwebgl-documentation">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span id="api" data-i18n="nav.lang._name">智能管控</span>
+										<i class="fa fa-sort-down"></i>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="carTrace">车辆轨迹</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="faceRecognition">人脸识别</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown nav-dropdown-menu download-menu" id="3dwebgl-documentation">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span id="api" data-i18n="nav.lang._name">分析研判</span>
+										<i class="fa fa-sort-down"></i>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="judgementReport">研判报告</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="chart">统计图表</a>
+										</li>
+										<li>
+											<a id="heat" class="lang-option text-center" href="javascript:void(0)">热力图测试</a>
+										</li>
+										<li>
+											<a id="dynamicTrajectory" class="lang-option text-center" href="javascript:void(0)">动态轨迹</a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown nav-dropdown-menu download-menu" id="3dwebgl-documentation">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span id="api" data-i18n="nav.lang._name">联勤联动</span>
+										<i class="fa fa-sort-down"></i>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="chexiaoya">车小丫</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="zhifayi">执法仪</a>
+										</li>
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" onclick="getHomePosition()"></a>
+										</li>
+									</ul>
+								</li>
+								<li class="dropdown nav-dropdown-menu download-menu" id="3dwebgl-documentation">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<span id="api" data-i18n="nav.lang._name">测量工具</span>
+										<i class="fa fa-sort-down"></i>
+									</a>
+									<ul class="dropdown-menu">
+										<li>
+											<a class="lang-option text-center" href="javascript:void(0)" id="measure">量测</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</header>
+			<!--头部导航 end-->
+
+			<!-- 内容区 -->
+			<div class="content-wrapper examples-container" id="main">
+				<!--三维球体-->
+				<div id="cesiumContainer"></div>
+
+				<!--<div id="heatmap" style="top:62px; left:2px;width: 282px; height: 873px; border: 1px solid; border-color: grey;background: #fff;display:none">
+					<div class="heatmap-canvas" width="50%" height="25%">
+					</div>
+				</div>-->
+
+				<!--单体化 start-->
+				<div id="widget_monomer">
+					<div id="bubble" class="bubble" style="position: fixed;bottom:0;left:82%;display:none;width: 400px">
+						<div id="tools" style="text-align : right">
+							<span style="color: rgb(95, 74, 121);padding: 5px;position: absolute;left: 10px;top: 4px;">对象属性</span>
+							<span class="fui-export" id="bubblePosition" style="color: darkgrey; padding:5px" title="停靠"></span>
+							<span class="fui-cross" title="关闭" id="close" style="color: darkgrey;padding:5px"></span>
+						</div>
+						<div style="overflow-y:scroll;height:150px" id="tableContainer">
+							<table id="tab" style="height: 150px;"></table>
+						</div>
+					</div>
+				</div>
+				<!--单体化 end-->
+
+				<!--热力图 start-->
+				<div id="heatmap" style="width: 282px; height: 873px;">
+				</div>
+				<!--热力图 end-->
+
+			</div>
+			<!--内容区 end-->
+
+		</div>
+		<div id='loadingbar' class="spinner">
+			<div class="spinner-container container1">
+				<div class="circle1"></div>
+				<div class="circle2"></div>
+				<div class="circle3"></div>
+				<div class="circle4"></div>
+			</div>
+			<div class="spinner-container container2">
+				<div class="circle1"></div>
+				<div class="circle2"></div>
+				<div class="circle3"></div>
+				<div class="circle4"></div>
+			</div>
+			<div class="spinner-container container3">
+				<div class="circle1"></div>
+				<div class="circle2"></div>
+				<div class="circle3"></div>
+				<div class="circle4"></div>
+			</div>
+		</div>
+
+		<!--requireJS库-->
+		<script src="js/require/require.js" data-main="./js/main.js" defer async="true"></script>
+		<script>
+			var lastWidget = null;
+			/**
+			 * 导航菜单点击事件
+			 */
+			$("#nav-menu>li>ul>li>a").click(function(evt) {
+				//禁用a标签的链接
+				//evt.preventDefault();
+				widgetChanegd(this.id);
+			});
+
+			/**
+			 * 模块切换
+			 * @param {Object} name
+			 */
+			function widgetChanegd(name) {
+				//显示进度条
+				$("#loadingbar").show();
+
+				//加载模块
+				$.ajax({
+					type: "get",
+					url: "js/widget/" + name + "/" + name + ".html",
+					success: function(result) {
+
+						//移除上一个模块
+						removeWidget(lastWidget, function() {
+							//加载当前模块
+							loadWidget(name, result);
+							lastWidget = name;
+							//隐藏进度条
+							$("#loadingbar").hide();
+						});
+					},
+
+					error: function(err) {
+						$("#loadingbar").hide();
+						console.log("请求出错: load " + name + " error");
+
+					}
+				});
+
+			}
+
+			/**
+			 * 移除模块
+			 * @param {Object} name
+			 * @param {Object} callback
+			 */
+			function removeWidget(name, callback) {
+				if (name != null) {
+					require([name], function(mLastWidget) {
+						mLastWidget.removeWidget();
+					});
+				}
+				callback();
+			}
+
+			/**
+			 * 加载模块
+			 * @param {Object} name
+			 * @param {Object} content
+			 */
+			function loadWidget(name, content) {
+				//加载模块
+				require([name], function(mWidget) {
+					mWidget.loadWidget(content);
+				});
+			}
+
+			/**
+			 * 加载互斥模块
+			 */
+			function loadMutexWidget(name, mutexArr, activeArr) {
+				for (var i in mutexArray) {
+					for (var j in mutexArray[i]) {
+						if (name == mutexArray[i][j]) {
+							break;
+						} else {
+							continue;
+						}
+
+					}
+
+					//获取当前模块所在的互斥数组
+					var removeArray = [];
+					var currentMutexArr = mutexArr[i];
+
+					for (var m in currentMutexArr) {
+						var mutexName = currentMutexArr[m];
+						var index = activeArr.indexOf(mutexName);
+						if (index != -1) {
+							removeWidget(mutexName, function() {
+								removeArray.push(index);
+							});
+						}
+					}
+
+					for (var n in removeArray) {
+						activeArr.splice(removeArray[n], 1);
+
+					}
+
+				}
+			}
+		</script>
+		<div id="cesiumContainer"></div>
+
+	</body>

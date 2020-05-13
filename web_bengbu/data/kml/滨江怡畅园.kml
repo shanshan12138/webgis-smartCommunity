@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml>
+  <Document>
+    <Placemark>
+      <name>滨江怡畅园</name>
+      <visibility>1</visibility>
+      <Polygon>
+        <altitudeMode>clampToGround</altitudeMode>
+        <outerBoundaryIs>
+          <LinearRing>
+            <coordinates>
+              114.2486830079,30.5232204658,0
+              114.2469236662,30.5214339365,0
+              114.2484214483,30.5203488862,0
+              114.2487678915,30.5207568346,0
+              114.249707167,30.5208244095,0
+              114.2500713784,30.520937763,0
+              114.2502866061,30.5212432377,0
+              114.2501130347,30.5215921652,0
+              114.250422603,30.5220126074,0
+              114.2486830079,30.5232204658,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+  </Document>
+</kml>
+

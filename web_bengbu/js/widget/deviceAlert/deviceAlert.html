@@ -1,0 +1,71 @@
+<!--统计图表-->
+<style type="text/css">
+			.box {
+				width: 460px;
+				padding: 15px 100px;
+				position: relative;
+				background: #9ee06a;
+				border-radius: 5px;
+				font-size: 14px;
+				margin-left: 13px;
+			}
+
+			.box span {
+				width: 0;
+				height: 0;
+				position: absolute;
+				overflow: hidden;
+				font-size: 0;
+			}
+
+			.box span.needle {
+				border-width: 14px 46px;
+				border-style: solid;
+				border-color: #9ee06a transparent transparent #9ee06a;
+				left: 22px;
+				top: 44.5px;
+			}
+
+			.box span.cover {
+				border-width: 16px 28px;
+				border-style: dashed solid solid dashed;
+				border-color: #2c2e49 transparent transparent #2c2e49;
+				left: 13px;
+				top: 49.5px;
+			}
+		</style>
+<div id="container-chart" style="position:absolute;bottom:2px;right:2px;width:500px;height:380px;background: rgba(8,24,50,0.7);box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);border-style: solid;border-width: 5px;border-image: url(./img/bg_border.png) 5 fill / 1 / 0 stretch;">
+	<div id="chartHeader" style="width:100%;height:40px;top: 0px;left: 0px;float: top;">
+		<h4 style="float: left;color: #fff;margin-left: 10px;">设备异常报警</h4>
+		<button type="button" class="close" style="width: 30px;height: 30px;margin:3px;font-size: 32px;font-weight: normal"
+		 id="chartClose">×</button>
+	</div>
+	<div class="analy-body" id="analy-body" style="height:500px;margin-bottom: 0px;">
+     <p style="font-size: 13px;color: white; text-align: center;">设备异常描述</p>
+
+		<!-- 面板区 -->
+		<div id="tab_panel" class="tab-content">
+			<div class="box">
+				<span class="needle"></span>
+				<span class="cover"></span>
+				1栋1单元东边道路旁边垃圾桶已满
+			</div>
+			<div class="box">
+				<span class="needle"></span>
+				<span class="cover"></span>
+				2栋2单元北边道路旁边井盖角度异常
+			</div>
+			<div class="box">
+				<span class="needle"></span>
+				<span class="cover"></span>
+				24栋1单元地下室水漫监测点水位异常
+			</div>
+			<div class="box">
+				<span class="needle"></span>
+				<span class="cover"></span>
+				17栋与21栋之间配电室用电电流异常
+			</div>
+
+		</div>
+	</div>
+</div>
