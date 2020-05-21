@@ -133,7 +133,8 @@ require.config({
 
 });
 
-require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function($, mCesium, mZlib, mBootstrap, config,common) {
+require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function($, mCesium, mZlib, mBootstrap, config,
+	common) {
 
 	var viewer = null;
 	var scene = null;
@@ -169,6 +170,8 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 		viewer.imageryLayers.addImageryProvider(google, 0);
 		try {
 			var promise = scene.open('http://localhost:8091/iserver/services/3D-nanshanlidu_new/rest/realspace');
+			// var promise = scene.open('http://localhost:8091/iserver/services/3D-rooms/rest/realspace');
+
 			Cesium.when(promise, function(layer) {
 					// var style3D = new Cesium.Style3D();
 					// layer.style3D = style3D;
@@ -202,28 +205,15 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 	 * 加载地图数据
 	 */
 	function loadMapData() {
-		
-		//**************************************J加载3D-FaBuHuanCun的部分区域
-		//不通过supermap的形式加载边界(为了不显示logo)
-		// loadKmlData('./data/kml/area1.kml', false);
-		// loadKmlData('./data/kml/area2.kml', false);
-		// loadKmlData('./data/kml/area3.kml', false);
-		// loadKmlData('./data/kml/area4.kml', false);
-		// //滨江怡畅园小区边界
-		// loadKmlData('./data/kml/滨江怡畅园.kml', true, function(entity) {
-		// 	viewer.flyTo(entity, {
-		// 		'duration': 5
-		// 	});
-		// });
-
 		//加载天地图中文注记服务
-		loadChineseMarkingData();
+		// loadChineseMarkingData();
 
 		//加载三维模型
 		// load3DModelData(function() {
 		// 	//加载单体化模型
-		// 	requestMonomerData();
+		// 	
 		// });
+		requestMonomerData();
 	}
 
 	/**
@@ -232,21 +222,24 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 	function bindEvent() {
 		//点击单体化
 		viewer.pickEvent.addEventListener(function(feature) {
+			alert("哈哈哈哈");
 			var table = document.getElementById("tab");
 			var mInfo = feature.CNAME + feature.BUILDING + "栋" + feature.UNIT + "单元" + feature.FLOOR + "楼" + "0" + feature.NO +
 				"号";
 			var mData = {
-				communityId: 373,
-				doorNo: mInfo
+				communityId: 0002,
+				doorNo: mInfo,
+				// "roomId":"nanshanlidu-d-18-3-1401",
 			};
-			console.log("绑定"+mData);
+			console.log("绑定" + mData);
 			$.ajax({
-				url: "http://10.10.8.60:8088/DataCenterServer/House/getInfoByDoorNo",
-				type: "GET",
+				url: "http://127.0.0.1:8080/dsjh/dcs/637adaeda26941579caf689d018244a9/select",
+				// url: "http://10.10.8.60:8088/DataCenterServer/House/getInfoByDoorNo",
+				type: "POST",
 				async: true,
 				data: mData,
 				success: function(data) {
-					console.log("8.60的服务:" + data);
+					console.log("房屋数据:" + data);
 					var result = $.parseJSON(data);
 					console.log("result:" + result);
 
@@ -381,13 +374,13 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 			success: function(mResult) {
 				console.log("三维服务", mResult);
 
-				if (mResult.msg == "登录过期!") {
-					window.location = "login.html";
-					return;
-				}
+				// if (mResult.msg == "登录过期!") {
+				// 	window.location = "login.html";
+				// 	return;
+				// }
 				var data = mResult.data;
 				for (var i in data) {
-					//					console.log(data);
+					// console.log(data);
 					//加载请求的模型数据
 					scene.addS3MTilesLayerByScp(data[i].mapdata_url, {
 						name: data[i].mapdata_name
@@ -413,19 +406,12 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 
 		//ajax请求, 获取服务地址(for循环, 加载)
 
-		//单体化模型
-		// var mapUrl = "http://localhost:8091/iserver/services/3D-shpall-HYzt/rest/realspace/datas/shpall@HYzt/config";//半透明
-		// var mapUrl = "http://localhost:8091/iserver/services/3D-shpall-HYzt2/rest/realspace/datas/shpall@HYzt/config" //透明
-		// var mapUrl = "http://10.10.2.151:8091/iserver/services/3D-test-monomer-new/rest/realspace/datas/shpall@HYzt/config"; //透明
-		// var mapUrl = "http://10.10.2.151:8091/iserver/services/3D-test-monomer-new2/rest/realspace/datas/shpall@HYzt/config"; //半透明
+		//单体化模型 需要S3M格式的缓存
+		var mapUrl = "http://localhost:8091/iserver/services/3D-danthquantou/rest/realspace/datas/danth@111/config" //透明
 
 		//单体化数据(属性)
-		// var dataUrl = "http://localhost:8091/iserver/services/data-shpall-HYzt/rest/data";//半透明
-		// var dataUrl = "http://localhost:8091/iserver/services/data-shpall-HYzt2/rest/data"; //透明
-		// var dataUrl = "http://10.10.2.151:8091/iserver/services/data-test-monomer-new/rest/data"; //透明
-		// var dataUrl = "http://localhost:8091/iserver/services/data-test-monomer-new2/rest/data"; //半透明
-
-		// loadMonomerData(mapUrl, dataUrl);
+		var dataUrl = "http://localhost:8091/iserver/services/data-danthquantou/rest/data"; //透明
+		loadMonomerData(mapUrl, dataUrl);
 	}
 
 	/**
@@ -438,14 +424,12 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 
 			//添加S3M图层服务
 			var monomerPromise = scene.addS3MTilesLayerByScp(mapUrl, {
-				name: 'test-monomer',
-				// name:'shpall-HYzt',
+				name: 'danthquantou',
 			});
 
 			Cesium.when(monomerPromise, function(layer) {
 				//设置相机视角
-								// viewer.flyTo(layer);
-
+				viewer.flyTo(layer);
 				layer.cullEnabled = false;
 				layer.style3D._fillForeColor.alpha = 1.0; //初始值为0, 此处为了可见, 改为1
 				layer.selectionFiltrateByTransparency = 0; // 不过滤透明度为0的物体，当前图层就不会被过滤
@@ -456,8 +440,8 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 				//设置属性查询参数
 				layer.setQueryParameter({
 					url: dataUrl,
-					dataSourceName: 'HYzt',
-					dataSetName: 'shpall',
+					dataSourceName: '111', //@后面的
+					dataSetName: 'danth',
 					keyWord: 'SmID'
 				});
 
@@ -481,33 +465,6 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 	}
 
 	/**
-	 * 加载区域边界服务
-	 */
-	function loadBoundaryData() {
-
-		ajaxRequest({}, ipPort, "u/map/select", function(result) {
-			console.log("区域边界", result);
-			if (result.code == 200) {
-				var data = result.data;
-				if (data == null) {
-					return;
-				}
-				for (var i in data) {
-					console.log(data[i].mapdata_url);
-					if (data[i].mapdata_url.indexOf("3D-FaBuHuanCun") != -1) {
-						continue;
-					}
-					var imageProvider = new Cesium.SuperMapImageryProvider({
-						url: data[i].mapdata_url
-					});
-					imageryLayers.addImageryProvider(imageProvider);
-				}
-			}
-		});
-
-	}
-
-	/**
 	 * 调整三维球体的尺寸
 	 */
 	function setGlobalSize() {
@@ -521,35 +478,5 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 		document.getElementById("cesiumContainer").style.height = (mHeight - 50) + 'px';
 	}
 
-	/**
-	 * 加载kml数据(一般用于加载边界数据)
-	 * @param {Object} url kml数据url地址
-	 * @param {Object} flag 是否填充面
-	 */
-// 	function loadKmlData(url, flag, callback) {
-// 		var kmlOptions = {
-// 			camera: viewer.scene.camera,
-// 			canvas: viewer.scene.canvas,
-// 			clampToGround: true
-// 		};
-// 		var geocachePromise = Cesium.KmlDataSource.load(url, kmlOptions);
-// 
-// 		var mArea = viewer.dataSources.add(geocachePromise, kmlOptions);
-// 		var entities = undefined;
-// 		mArea.then(function(dataSource) {
-// 			entities = dataSource.entities.values;
-// 			for (var i = 0; i < entities.length; i++) {
-// 				var entity = entities[i];
-// 				//去掉地形遮挡　
-// 				entity.polygon.disableDepthTestDistance = Number.POSITIVE_INFINITY;
-// 				entity.polygon.material = Cesium.Color.fromRandom({
-// 					alpha: 0.2
-// 				});
-// 				entity.polygon.fill = flag;
-// 			}
-// 			//回调
-// 			callback(entities);
-// 		});
-// 	}
 
 });

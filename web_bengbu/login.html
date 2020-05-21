@@ -209,7 +209,6 @@
 				setTimeout(function() {
 					$.ajax({
 						url: 'http://localhost:8090/super_community_manage/sys/sysPermission/getMenu?parentId=86c9e0f632f3443691ff554cc78628b9&menuFlag=1',
-						// url: 'http://localhost:8090/super_community_manage/sys/sysPermission/getMenu?parentId=4a203654f84f466096329939221318a3&menuFlag=1'，'
 						// url: 'http://localhost:8090/super_community_manage/sys/sysPermission/getMenu?parentId=2&menuFlag=1',
 
 						dataType: 'json',
@@ -219,7 +218,7 @@
 							if (data.code === 200) {
 								//ie下location的base属性无效
 								// window.location = document.getElementsByTagName("base")[0].getAttribute("href")+ "sys/index";
-								window.location = "http://localhost:8090/super_community_manage/sys/index";
+								// window.location = "http://localhost:8090/super_community_manage/sys/index";
 							} else {
 								$.messager.show({
 									title: '提示',
@@ -232,15 +231,7 @@
 				}, 500);
 			} else {
 				confirm("请选择登陆角色！")
-				// layer.alert('请选择登陆角色!', {
-				// 	skin: 'layui-layer-lan',
-				// 	closeBtn: 0,
-				// 	anim: 4 //动画类型
-				// });
 			}
-
-
-
 		}
 	</script>
 

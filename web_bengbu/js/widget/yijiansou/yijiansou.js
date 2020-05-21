@@ -138,70 +138,6 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 				}]
 			};
 
-
-			/*	var option1 = {
-					title: {
-						text: '用电量折线图',
-						subtext: ''
-					},
-					tooltip: {
-						trigger: 'axis'
-					},
-					legend: {
-						data: ['用电量']
-					},
-					toolbox: {
-						show: true,
-						feature: {
-							mark: {
-								show: true
-							},
-							dataView: {
-								show: true,
-								readOnly: false
-							},
-							magicType: {
-								show: true,
-								type: ['line', 'bar']
-							},
-							restore: {
-								show: true
-							},
-							saveAsImage: {
-								show: true
-							}
-						}
-					},
-					calculable: true,
-					xAxis: [{
-						type: 'category',
-						boundaryGap: false,
-						data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-					}],
-					yAxis: [{
-						type: 'value',
-						axisLabel: {
-							formatter: '{value} kW·h'
-						}
-					}],
-					series: [{
-						name: '用电量',
-						type: 'line',
-						data: [53, 47, 41, 43, 42, 52, 76, 78, 67, 48, 43, 51],
-						markPoint: {
-							data: [{
-								type: 'kW·h',
-								name: '用电量'
-							}, ]
-						},
-						markLine: {
-							data: [{
-								type: 'average',
-								name: '平均值'
-							}]
-						}
-					}, ]
-				};*/
 			echarts.init(document.getElementById('yongdianliangChart'), 'dark').setOption(option1);
 
 			//显示
@@ -253,7 +189,6 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 		var mData = {
 			keyField: keyWord
 		};
-		// var mUrl = "dcs/b38b591771884e97ae104c692dcacfdc/select?pageNum=1&pageSize=25";
 		var mUrl = "dcs/b38b591771884e97ae104c692dcacfdc/select?pageNum=1&pageSize=9";
 		ajaxRequest(mData, ipPort, mUrl, function(result) {
 			console.log(result);
@@ -614,8 +549,10 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 	//获取当前用户的房屋模型
 	getMonomer = function(id) {
 		var mId = id.replace(/[^0-9]/ig, "");
-		// console.log(mId);
+		console.log(mId);
+		// console.log(houseArray);
 
+		//正则表达式 只获取0-9的数字
 		var biulding = houseArray[mId].building_name.replace(/[^0-9]/ig, "");
 		var unit = houseArray[mId].unit_name.replace(/[^0-9]/ig, "");
 		var floor = houseArray[mId].floor.replace(/[^0-9]/ig, "");
@@ -623,9 +560,10 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 		if (no.substr(0, 1) == "0") {
 			no = no.substring(1);
 		}
-		//		console.log(biulding + "..." + unit + "..." + floor + "..." + no);
-		var sqlStr = "CNAME=\"滨江怡畅园\" AND BUILDING=" + biulding + " AND UNIT=" + unit + " AND FLOOR=" + floor + " AND NO=" +
-			no;
+		// console.log(biulding + "..." + unit + "..." + floor + "..." + no);
+		// string sName = housetxt.building_name + housetxt.unit_name + housetxt.floor + "层" + housetxt.room_number;
+		var sqlStr = "CNAME=\"南山郦都\" AND BUILDING=" + biulding + " AND UNIT=" + unit + " AND FLOOR=" + floor + " AND NO=" +no;
+		console.log(sqlStr);
 		doSqlQuery(sqlStr);
 	}
 	//请求房屋数据
@@ -637,9 +575,9 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 		getFeatureBySQLParams = new SuperMap.REST.GetFeaturesBySQLParameters({
 			queryParameter: getFeatureParam,
 			toIndex: -1,
-			datasetNames: ["HYzt:" + "shpall"]
+			datasetNames: ["111:" + "danth"]
 		});
-		var url = 'http://10.10.2.151:8091/iserver/services/data-test-monomer-new2/rest/data';
+		var url = "http://localhost:8091/iserver/services/data-danthquantou/rest/data"; //透明
 		getFeatureBySQLService = new SuperMap.REST.GetFeaturesBySQLService(url, {
 			eventListeners: {
 				"processCompleted": onQueryComplete,
@@ -650,7 +588,8 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 	}
 
 	function processFailed(queryEventArgs) {
-		alert('查询失败！');
+		console.log('查询失败！'+queryEventArgs);
+		// alert('查询失败！');
 	}
 
 	function onQueryComplete(queryEventArgs) {
