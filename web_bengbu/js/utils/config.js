@@ -3,7 +3,7 @@
  */
 
 //本机服务地址
-var ipPort = "http://localhost:8080/dsjh/";
+var ipPort = "http://127.0.0.1:8080/dsjh/";
 
 //车小丫执法仪服务地址
 // var cxyZfyPort = "http://localhost:8090/super_community_chexiaoya/";

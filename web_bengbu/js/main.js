@@ -213,6 +213,7 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 		// 	//加载单体化模型
 		// 	
 		// });
+		//加载单体化模型
 		requestMonomerData();
 	}
 
@@ -222,26 +223,35 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 	function bindEvent() {
 		//点击单体化
 		viewer.pickEvent.addEventListener(function(feature) {
-			alert("哈哈哈哈");
+			console.log('成功点击单体化');
 			var table = document.getElementById("tab");
-			var mInfo = feature.CNAME + feature.BUILDING + "栋" + feature.UNIT + "单元" + feature.FLOOR + "楼" + "0" + feature.NO +
-				"号";
+			// var mInfo = feature.CNAME + feature.BUILDING + "栋" + feature.UNIT + "单元" + feature.FLOOR + "楼" + "0" + feature.NO +"号";
+			var featureInfo = feature.PLACEMARKNAME; // "D15栋1单元25层2502"
+			//获取楼号
+			building = featureInfo.match(/D(\S*)栋/)[1];
+			unit = featureInfo.match(/栋(\S*)单/)[1];
+			// floor = featureInfo.match(/元(\S*)层/)[1];
+			roomNo = featureInfo.match(/层(\S*)/)[1];
+			mInfo = "nanshanlidu-d-" + building + '-' + unit + '-' + roomNo;
+
+			alert(mInfo);
 			var mData = {
-				communityId: 0002,
-				doorNo: mInfo,
-				// "roomId":"nanshanlidu-d-18-3-1401",
+				communityId: "0002",
+				roomId: mInfo,
+
 			};
-			console.log("绑定" + mData);
+			console.log("mData:", mData);
 			$.ajax({
 				url: "http://127.0.0.1:8080/dsjh/dcs/637adaeda26941579caf689d018244a9/select",
-				// url: "http://10.10.8.60:8088/DataCenterServer/House/getInfoByDoorNo",
 				type: "POST",
 				async: true,
-				data: mData,
+				contentType: 'application/json;charset=utf-8',
+				data: JSON.stringify(mData),
 				success: function(data) {
-					console.log("房屋数据:" + data);
+					//房屋数据
+					console.log("房屋数据:", data);
 					var result = $.parseJSON(data);
-					console.log("result:" + result);
+					console.log("result:", result);
 
 					$("#bubble").show();
 					for (var i = table.rows.length - 1; i > -1; i--) {
@@ -252,17 +262,33 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 						proData = {
 							"地址": "空",
 							"户主": "空",
+							"类型": "空",
 							"性别": "空",
 							"手机": "空",
 							"身份证": "空"
 						};
+					} else if (result.data.houseRelation.length === 0) {
+						building_id = result.data.building_id;
+						unit_name = result.data.unit_name;
+						room_number = result.data.room_number;
+						var live_address = "安徽省蚌埠市蚌山区南山郦都D区" + building_id + "栋" + unit_name + room_number + "室";
+						proData = {
+							"地址": live_address,
+							"户主": "空",
+							"类型": "空",
+							"性别": "空",
+							"手机": "空",
+							"身份证": "空"
+						};
+
 					} else {
 						proData = {
-							"地址": result.data.connectionAddress,
-							"户主": result.data.owner,
-							"性别": result.data.ownerSex,
-							"手机": result.data.ownerPhone,
-							"身份证": result.data.ownerIdcard
+							"地址": result.data.houseRelation[0].live_address,
+							"户主": result.data.houseRelation[0].person_name,
+							"类型": result.data.houseRelation[0].live_type,
+							"性别": result.data.houseRelation[0].gender,
+							"手机": result.data.houseRelation[0].mobile_number,
+							"身份证": result.data.houseRelation[0].paper_number
 						};
 					}
 
@@ -276,7 +302,11 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 						cell2.innerHTML = proData[cell];
 					}
 
+				},
+				error: function() {
+					alert('服务器内部错误！');
 				}
+
 			});
 
 		});

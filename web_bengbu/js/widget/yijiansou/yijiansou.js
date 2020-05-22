@@ -18,7 +18,7 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 		searchInits();
 		//绑定事件
 		bindEvent();
-		buildingLayer = scene.layers.find("test-monomer");
+		buildingLayer = scene.layers.find("danthquantou");
 	}
 
 	/**
@@ -248,7 +248,7 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 	var houseArray = null;
 
 	function setQueryContent(result) {
-		console.log(result);
+		// console.log(result);
 		var item = "";
 		var dataArr = result.data.list;
 		houseArray = new Array();
@@ -260,144 +260,6 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 			var aId = "a" + i;
 			var houseObj = dataArr[i].houses[0];
 			houseArray.push(houseObj);
-
-			/*//FFF3F3
-			item = item + '<div style="float: left;width: 240px;height:300px;background: #fff;margin: 2px;border-radius: 4px">' +
-
-				//标题
-				'<ul id="myTab" class="nav nav-tabs" style="background: #F4F4F4">' +
-				'<li class="active">' +
-				'<a href="#' + personId + '" data-toggle="tab">人</a>' +
-				'</li>' +
-				'<li>' +
-				'<a href="#' + cardId + '" data-toggle="tab">卡</a>' +
-				'</li>' +
-				'<li>' +
-				'<a href="#' + houseId + '" data-toggle="tab">房</a>' +
-				'</li>' +
-				'<li>' +
-				'<a href="#' + carId + '" data-toggle="tab">车</a>' +
-				'</li>' +
-				'</ul>' +
-
-				'<div id="myTabContent" class="tab-content">' +
-
-				//人
-				'<div class="tab-pane fade in active" id=' + personId + ' style="width:100%;height:258px;padding: 1px;">' +
-				'<div style="float: top;width:100%;height:100%;margin-bottom: 1px;border:1px solid #AAA;border-radius:4px;padding:12px">' +
-				'<table style="width: 100%; height: 100%;font-size: 12px">' +
-				'<tr style="width: 100%;height:20px;">' +
-				'<td style="width: 68px;">姓名:</td>' +
-				'<td><tt><a>' + dataArr[i].person_name + '</a></tt></td>' +
-				'</tr>' +
-				'<tr style="width: 100%;height:20px;">' +
-				'<td style="width: 68px;">性别:</td>' +
-				'<td><tt>' + dataArr[i].gender + '</tt></td>' +
-				'</tr>' +
-				'<tr style="width: 100%;height:20px;">' +
-				'<td style="width: 68px;">身份证号:</td>' +
-				'<td><tt>' + dataArr[i].paper_number + '</tt></td>' +
-				'</tr>' +
-				'<tr style="width: 100%;height:20px;">' +
-				'<td style="width: 68px;">电话号码:</td>' +
-				'<td><tt>' + dataArr[i].mobile_number + '</tt></td>' +
-				'</tr>' +
-				'<tr style="width: 100%;height:20px;">' +
-				'<td style="width: 68px;">文化程度:</td>' +
-				'<td><tt>' + dataArr[i].agree + '</tt></td>' +
-				'</tr>' +
-				'<tr style="width: 100%;height:20px;">' +
-				'<td style="width: 68px;">政治面貌:</td>' +
-				'<td><tt>' + dataArr[i].political + '</tt></td>' +
-				'</tr>' +
-				'<tr style="width: 100%;height:20px;">' +
-				'<td style="width: 68px;">工作单位:</td>' +
-				'<td><tt>' + dataArr[i].company + '</tt></td>' +
-				'</tr>' +
-				'</table>' +
-				'</div>' +
-				'</div>';
-
-			if(dataArr[i].cards.length > 0) {
-				//卡
-				item = item + '<div class="tab-pane fade" id=' + cardId + ' style="width:100%;height:258px;padding: 1px;">' +
-					//				'<p>无数据</p>' +
-					'<div style="float: top;width:100%;height:100%;margin-bottom: 1px;border:1px solid #AAA;border-radius:4px;padding:12px">' +
-					'<table style="table-layout:fixed;width: 100%; height: 100%;font-size: 12px">' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">卡id:</td>' +
-					'<td style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;"><tt>' + dataArr[i].cards[0].origin_id + '</tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">卡编号:</td>' +
-					'<td><tt><a>' + dataArr[i].cards[0].card_number + '</a></tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">卡类型:</td>' +
-					'<td><tt>' + dataArr[i].cards[0].card_type + '</tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">发卡时间:</td>' +
-					'<td><tt><a>' + dataArr[i].cards[0].publish_time + '</a></tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">激活时间:</td>' +
-					'<td><tt>' + dataArr[i].cards[0].activity_time + '</tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">过期时间:</td>' +
-					'<td><tt>' + dataArr[i].cards[0].expired_time + '</tt></td>' +
-					'</tr>' +
-					'</table>' +
-					'</div>' +
-					'</div>';
-			}
-
-			if(dataArr[i].houses.length > 0) {
-				//房
-				item = item + '<div class="tab-pane fade" id=' + houseId + ' style="width:100%;height:258px;padding: 1px;">' +
-					'<div style="float: top;width:100%;height:100%;margin-bottom: 1px;border:1px solid #AAA;border-radius:4px;padding:12px">' +
-					'<table style="width: 100%; height: 100%;font-size: 12px">' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">地址:</td>' +
-					'<td><tt><a id=' + aId + ' onClick="getMonomer(this.id)">' + dataArr[i].houses[0].connection_address + '</a></tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">户主:</td>' +
-					'<td><tt>' + dataArr[i].houses[0].agent_name + '</tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">楼栋:</td>' +
-					'<td><tt>' + dataArr[i].houses[0].building_name + '</tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">单元:</td>' +
-					'<td><tt>' + dataArr[i].houses[0].unit_name + '</tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">楼层:</td>' +
-					'<td><tt>' + dataArr[i].houses[0].floor + '</tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">门号:</td>' +
-					'<td><tt>' + dataArr[i].houses[0].room_number + '</tt></td>' +
-					'</tr>' +
-					'<tr style="width: 100%;height:20px;">' +
-					'<td style="width: 68px;">更新时间:</td>' +
-					'<td><tt>' + dataArr[i].houses[0].modify_time + '</tt></td>' +
-					'</tr>' +
-					'</table>' +
-					'</div>' +
-					'</div>';
-			}
-
-			//车
-			item = item + '<div class="tab-pane fade" id=' + carId + ' style="width:100%;height:258px;padding: 1px;">' +
-				'<p>无数据</p>' +
-				'</div>' +
-				'</div>' +
-
-				'</div>';*/
 
 			//FFF3F3
 			item = item +
@@ -550,19 +412,24 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 	getMonomer = function(id) {
 		var mId = id.replace(/[^0-9]/ig, "");
 		console.log(mId);
-		// console.log(houseArray);
+		console.log(houseArray);
 
 		//正则表达式 只获取0-9的数字
-		var biulding = houseArray[mId].building_name.replace(/[^0-9]/ig, "");
-		var unit = houseArray[mId].unit_name.replace(/[^0-9]/ig, "");
-		var floor = houseArray[mId].floor.replace(/[^0-9]/ig, "");
-		var no = houseArray[mId].room_number.replace(/[^0-9]/ig, "");
-		if (no.substr(0, 1) == "0") {
-			no = no.substring(1);
-		}
-		// console.log(biulding + "..." + unit + "..." + floor + "..." + no);
-		// string sName = housetxt.building_name + housetxt.unit_name + housetxt.floor + "层" + housetxt.room_number;
-		var sqlStr = "CNAME=\"南山郦都\" AND BUILDING=" + biulding + " AND UNIT=" + unit + " AND FLOOR=" + floor + " AND NO=" +no;
+		// var biulding = houseArray[mId].building_name.replace(/[^0-9]/ig, "");
+		// var unit = houseArray[mId].unit_name.replace(/[^0-9]/ig, "");
+		// var floor = houseArray[mId].floor.replace(/[^0-9]/ig, "");
+		// var no = houseArray[mId].room_number.replace(/[^0-9]/ig, "");
+		// if (no.substr(0, 1) == "0") {
+		// 	no = no.substring(1);
+		// }
+		// var sqlStr = "nanshanlidu-d-" + biulding + "-" + unit + "-" + floor + "-" + no;
+		// var sqlStr = "CNAME=\"南山郦都\" AND BUILDING=" + biulding + " AND UNIT=" + unit + " AND FLOOR=" + floor + " AND NO=" +no;
+		
+		var building = houseArray[mId].building_name;
+		var unit = houseArray[mId].unit_name;
+		var floor = houseArray[mId].floor;
+		var roomNumber = houseArray[mId].room_number;
+		var sqlStr = "PLACEMARKNAME='" + building + unit + floor + "层" + roomNumber + "'";
 		console.log(sqlStr);
 		doSqlQuery(sqlStr);
 	}
@@ -575,33 +442,37 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 		getFeatureBySQLParams = new SuperMap.REST.GetFeaturesBySQLParameters({
 			queryParameter: getFeatureParam,
 			toIndex: -1,
-			datasetNames: ["111:" + "danth"]
+			datasetNames: ["111:danth"]
+
 		});
 		var url = "http://localhost:8091/iserver/services/data-danthquantou/rest/data"; //透明
+
 		getFeatureBySQLService = new SuperMap.REST.GetFeaturesBySQLService(url, {
 			eventListeners: {
+				// 查询成功时的回调函数
 				"processCompleted": onQueryComplete,
+				//查询失败时的回调函数
 				"processFailed": processFailed
 			}
 		});
+
 		getFeatureBySQLService.processAsync(getFeatureBySQLParams);
 	}
 
 	function processFailed(queryEventArgs) {
-		console.log('查询失败！'+queryEventArgs);
+		console.log('查询失败！' + queryEventArgs);
 		// alert('查询失败！');
 	}
 
 	function onQueryComplete(queryEventArgs) {
-		console.log(queryEventArgs);
+		// console.log('查询成功！');
 
 		var selectedFeatures = queryEventArgs.originResult.features;
-
 		var id = null;
 		var feature = null;
 
 		for (var i = 0; i < selectedFeatures.length; i++) {
-			//			console.log(selectedFeatures);
+			console.log(selectedFeatures);
 			id = selectedFeatures[i].fieldValues["0"];
 			lastId = id;
 			feature = selectedFeatures[i];
@@ -610,15 +481,18 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 		buildingLayer.setSelection(id);
 
 		//跳转到当前模型的位置
+		//setView函数设置Camera的位置和方向
 		viewer.camera.setView({
 			destination: buildingLayer.layerBounds,
 			orientation: {
 				heading: Cesium.Math.toRadians(0.0), //水平方向旋转
 				pitch: Cesium.Math.toRadians(-75.0), // default value (looking down)
 				roll: 0.0 // default value
-			}
+			},
+			
 
 		});
+		console.log("跳转");
 
 	}
 
