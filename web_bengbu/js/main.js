@@ -149,7 +149,6 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 	 * 初始化
 	 */
 	function init() {
-
 		//初始化三维球体
 		viewer = new Cesium.Viewer('cesiumContainer', {
 			infoBox: false,
@@ -170,12 +169,8 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 		viewer.imageryLayers.addImageryProvider(google, 0);
 		try {
 			var promise = scene.open('http://localhost:8091/iserver/services/3D-nanshanlidu_new/rest/realspace');
-			// var promise = scene.open('http://localhost:8091/iserver/services/3D-rooms/rest/realspace');
 
-			Cesium.when(promise, function(layer) {
-					// var style3D = new Cesium.Style3D();
-					// layer.style3D = style3D;
-					// style3D.bottomAltitude = 2000;				
+			Cesium.when(promise, function(layer) {			
 				},
 				function(e) {
 					if (widget._showRenderLoopErrors) {
@@ -223,24 +218,22 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 	function bindEvent() {
 		//点击单体化
 		viewer.pickEvent.addEventListener(function(feature) {
-			console.log('成功点击单体化');
+			// console.log('成功点击单体化');
 			var table = document.getElementById("tab");
 			// var mInfo = feature.CNAME + feature.BUILDING + "栋" + feature.UNIT + "单元" + feature.FLOOR + "楼" + "0" + feature.NO +"号";
 			var featureInfo = feature.PLACEMARKNAME; // "D15栋1单元25层2502"
 			//获取楼号
 			building = featureInfo.match(/D(\S*)栋/)[1];
 			unit = featureInfo.match(/栋(\S*)单/)[1];
-			// floor = featureInfo.match(/元(\S*)层/)[1];
 			roomNo = featureInfo.match(/层(\S*)/)[1];
 			mInfo = "nanshanlidu-d-" + building + '-' + unit + '-' + roomNo;
-
-			alert(mInfo);
+			// alert(mInfo);
 			var mData = {
 				communityId: "0002",
 				roomId: mInfo,
 
 			};
-			console.log("mData:", mData);
+			// console.log("mData:", mData);
 			$.ajax({
 				url: "http://127.0.0.1:8080/dsjh/dcs/637adaeda26941579caf689d018244a9/select",
 				type: "POST",
@@ -249,9 +242,9 @@ require(["jquery", "Cesium", "Zlib", "bootstrap", "config", "common"], function(
 				data: JSON.stringify(mData),
 				success: function(data) {
 					//房屋数据
-					console.log("房屋数据:", data);
+					// console.log("房屋数据:", data);
 					var result = $.parseJSON(data);
-					console.log("result:", result);
+					// console.log("result:", result);
 
 					$("#bubble").show();
 					for (var i = table.rows.length - 1; i > -1; i--) {

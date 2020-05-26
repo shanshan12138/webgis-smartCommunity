@@ -19,6 +19,7 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 		//绑定事件
 		bindEvent();
 		buildingLayer = scene.layers.find("danthquantou");
+
 	}
 
 	/**
@@ -29,6 +30,12 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 		var timeEnd = getNowFormatDateEnd();
 		$("#searchTimeStart").val(timeStrat);
 		$("#searchTimeEnd").val(timeEnd);
+		searchBuilding();
+		$("#buildingSelect").on("change", buildingSelectChange);
+		$("#unitSelect").on("change", unitSelectChange);
+		$("#floorSelect").on("change", floorSelectChange);
+		$("#roomNoSelect").on("change", roomNoSelectChange);
+
 	}
 
 	/**
@@ -340,7 +347,7 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 					'</tr>' +
 					'<tr style="width: 100%;height:20px;">' +
 					'<td style="width: 68px;">发卡时间:</td>' +
-					'<td><tt><a>' + formatDateTime(dataArr[i].cards[0].publish_time) + '</a></tt></td>' +
+					// '<td><tt><a>' + formatDateTime(dataArr[i].cards[0].publish_time) + '</a></tt></td>' +
 					'</tr>' +
 					'<tr style="width: 100%;height:20px;">' +
 					'<td style="width: 68px;">激活时间:</td>' +
@@ -367,7 +374,7 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 					'</tr>' +
 					'<tr style="width: 100%;height:20px;">' +
 					'<td style="width: 68px;">户主:</td>' +
-					'<td><tt>' + dataArr[i].houses[0].agent_name + '</tt></td>' +
+					'<td><tt>' + dataArr[i].person_name + '</tt></td>' +
 					'</tr>' +
 					'<tr style="width: 100%;height:20px;">' +
 					'<td style="width: 68px;">楼栋:</td>' +
@@ -412,28 +419,16 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 	getMonomer = function(id) {
 		var mId = id.replace(/[^0-9]/ig, "");
 		console.log(mId);
-		console.log(houseArray);
-
-		//正则表达式 只获取0-9的数字
-		// var biulding = houseArray[mId].building_name.replace(/[^0-9]/ig, "");
-		// var unit = houseArray[mId].unit_name.replace(/[^0-9]/ig, "");
-		// var floor = houseArray[mId].floor.replace(/[^0-9]/ig, "");
-		// var no = houseArray[mId].room_number.replace(/[^0-9]/ig, "");
-		// if (no.substr(0, 1) == "0") {
-		// 	no = no.substring(1);
-		// }
-		// var sqlStr = "nanshanlidu-d-" + biulding + "-" + unit + "-" + floor + "-" + no;
-		// var sqlStr = "CNAME=\"南山郦都\" AND BUILDING=" + biulding + " AND UNIT=" + unit + " AND FLOOR=" + floor + " AND NO=" +no;
-		
+		// console.log(houseArray);		
 		var building = houseArray[mId].building_name;
 		var unit = houseArray[mId].unit_name;
 		var floor = houseArray[mId].floor;
 		var roomNumber = houseArray[mId].room_number;
 		var sqlStr = "PLACEMARKNAME='" + building + unit + floor + "层" + roomNumber + "'";
-		console.log(sqlStr);
+		// console.log(sqlStr);
 		doSqlQuery(sqlStr);
 	}
-	//请求房屋数据
+	//请求单体化数据
 	function doSqlQuery(SQL) {
 		var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams;
 		getFeatureParam = new SuperMap.REST.FilterParameter({
@@ -476,23 +471,42 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 			id = selectedFeatures[i].fieldValues["0"];
 			lastId = id;
 			feature = selectedFeatures[i];
+			west = selectedFeatures[i].fieldValues["1"];
+			north = selectedFeatures[i].fieldValues["2"];
+			east = selectedFeatures[i].fieldValues["3"];
+			south = selectedFeatures[i].fieldValues["4"];
 		}
-
-		buildingLayer.setSelection(id);
+		// buildingLayer.setSelection(id);
+		console.log(buildingLayer.layerBounds);
+		console.log(west);
+		console.log(north);
+		console.log(east);
+		console.log(south);
 
 		//跳转到当前模型的位置
 		//setView函数设置Camera的位置和方向
-		viewer.camera.setView({
-			destination: buildingLayer.layerBounds,
+		// viewer.camera.setView({
+		// 	destination: buildingLayer.layerBounds,
+		// 	orientation: {
+		// 		heading: Cesium.Math.toRadians(0.0), //水平方向旋转
+		// 		pitch: Cesium.Math.toRadians(-75.0), // default value (looking down)
+		// 		roll: 0.0, // default value
+		// 	},
+		// });
+
+
+		viewer.camera.flyTo({
+			destination: Cesium.Rectangle.fromDegrees(west, south, east, north),
 			orientation: {
 				heading: Cesium.Math.toRadians(0.0), //水平方向旋转
-				pitch: Cesium.Math.toRadians(-75.0), // default value (looking down)
-				roll: 0.0 // default value
+				pitch: Cesium.Math.toRadians(-45.0), // default value (looking down)
+				roll: 0.0, // default value
+				duration: 10,
+				// heading: 4.39611370540786,
+				// pitch: -0.43458664812464143,
+				// roll: 2.0174972803488345e-11,
 			},
-			
-
 		});
-		console.log("跳转");
 
 	}
 
@@ -527,7 +541,7 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 				$("#pdDoorCardCount").val(data[0].cards.length);
 				$("#pdDoorCardNum").val(data[0].cards[0].card_number);
 				$("#pdIdentityNum").val(data[0].paper_number);
-				$("#pdLoginTime").val(formatDateTime(data[0].modify_time));
+				// $("#pdLoginTime").val(formatDateTime(data[0].modify_time));
 				$("#pdAddress").val(data[0].census);
 				//住房信息
 				$("#phType").val();
@@ -644,6 +658,131 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 		});
 	}
 
+	//根据社区id获取楼栋信息
+	function searchBuilding() {
+		var mData = {
+			"communityId": "0002"
+		};
+		var mUrl = "dcs/c45b330bc62144779be0859e99965c8a/select";
+		ajaxRequest(mData, ipPort, mUrl, function(result) {
+			// console.log(result);
+			//请求结果处理
+			if (result.code == 200) {
+				//请求成功
+				var data = result.data;
+				console.log(data);
+				$.each(data, function(i, item) {
+					if (item == null) {
+						return;
+					}
+					$("<option></option>")
+						.val(item["building_id"])
+						.text(item["building_name"])
+						.appendTo($("#buildingSelect"));
+				});
+			}
+		});
+	}
+
+	var buildId;
+	var unitId;
+	var floorId;
+	var roomNoId;
+	//楼栋改变获取单元号
+	function buildingSelectChange(event) {
+		// console.log(event);
+		// console.log(this.value);
+		buildId = this.value;
+		var mData = {
+			"communityId": "0002",
+			"buildingId": buildId,
+		};
+		var ipPort = "http://127.0.0.1:8080/dsjh/";
+		var mUrl = "dcs/5efd334eceb94c59942f0f4e6e398994/select";
+		ajaxRequest(mData, ipPort, mUrl, function(result) {
+			if (result.code == 200) {
+				//请求成功
+				var data = result.data;
+				// console.log(data);
+				$.each(data, function(i, item) {
+					if (item == null) {
+						return;
+					}
+					$("<option></option>")
+						.val(item["unit_id"])
+						.text(item["unit_name"])
+						.appendTo($("#unitSelect"));
+				});
+			}
+		});
+	}
+
+	//单元、楼栋改变获取楼层
+	function unitSelectChange(event) {
+		unitId = this.value;
+		var mData = {
+			"communityId": "0002",
+			"buildingId": buildId,
+			"unitId": unitId
+		};
+		var mUrl = "dcs/8c55bb7811784e86992ff2a21dd281c6/select";
+		ajaxRequest(mData, ipPort, mUrl, function(result) {
+			if (result.code == 200) {
+				//请求成功
+				var data = result.data;
+				// console.log(data);
+				$.each(data, function(i, item) {
+					if (item == null) {
+						return;
+					}
+					$("<option></option>")
+						.val(item["floor"])
+						.text(item["floor"] + " 层")
+						.appendTo($("#floorSelect"));
+				});
+			}
+		});
+	}
+
+
+	//楼层、楼栋、单元改变获房间号
+	function floorSelectChange(event) {
+		// console.log(this.value);
+		floorId = this.value;
+		var mData = {
+			"communityId": "0002",
+			"buildingId": buildId,
+			"unitId": unitId,
+			"floor": floorId
+		};
+		var mUrl = "dcs/0505effd04ab4524bfa2300987268f92/select";
+		ajaxRequest(mData, ipPort, mUrl, function(result) {
+			if (result.code == 200) {
+				//请求成功
+				var data = result.data;
+				// console.log(data);
+				$.each(data, function(i, item) {
+					if (item == null) {
+						return;
+					}
+					$("<option></option>")
+						.val(item["room_id"])
+						.text(item["room_number"])
+						.appendTo($("#roomNoSelect"));
+				});
+			}
+		});
+	}
+	$("#floorSelect").on("change", floorSelectChange(this));
+
+	//房间号改变
+	function roomNoSelectChange(event) {
+		console.log(this.value);
+		floorId = this.value;
+	}
+	
+
+
 	//企业查询
 	function companySearch(name) {
 		if (name == '中百超市') {
@@ -690,7 +829,7 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 		//解绑事件
 		unBindEvent();
 		//清除地图选中元素
-		//		buildingLayer.removeAllObjsColor();
+		buildingLayer.removeAllObjsColor();
 		//清除html
 		removeHtmlDom();
 	}

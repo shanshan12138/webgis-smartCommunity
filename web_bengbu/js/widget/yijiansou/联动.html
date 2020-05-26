@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<!-- 	<div>
+			楼栋：<select class="sheng" onChange="selectChange(this.value)">
+				<option>
+					-请选择-
+				</option>
+			</select>
+			单元：<select class="shi" onChange="showName(this.value)">
+				<option>
+					-请选择-
+				</option>
+			</select>
+			楼层：<select class="qu">
+				<option>
+					-请选择-
+				</option>
+			</select>
+			房间：<select class="qu">
+				<option>
+					-请选择-
+				</option>
+			</select>
+		</div> -->
+		<div style="border: 1px solid black;">
+			<div>
+				<!-- 楼栋：<select id="buildingSelect" onChange="buildingSelectChange(this)"> -->
+				楼栋：<select id="buildingSelect">
+					<option value=''>-请选择楼栋-</option>
+				</select>
+			</div>
+			
+			<div>
+				单元：<select id="unitSelect" onChange="unitSelectChange(this)">
+					<option value=''>-请选择单元-</option>
+				</select>
+			</div>
+			<div>
+				楼层：<select id="floorSelect" onChange="floorSelectChange(this)">
+					<option value=''>-请选择楼层-</option>
+				</select>
+			</div>
+			<div>
+				房间：<select id="roomNoSelect" onChange="roomNoSelectChange(this)">
+					<option value=''>-请选择房间-</option>
+				</select>
+			</div>
+			<button id="hsSearch" type="button" class="btn-primary" style="float:right;width:70px;margin-right:14px;border: none;border-radius: 3px;color: #fff;">查询</button>
+
+
+		</div>
+		<script src="../../jquery.min.3.2.1.js"></script>
+		<script>
+			function ajaxRequest(params, ipPort, url, callback) {
+				var mData = params;
+				mData = JSON.stringify(mData);
+				$.ajax({
+					type: "post",
+					url: ipPort + url,
+					async: true,
+					dataType: "json",
+					contentType: "application/json",
+					data: mData,
+					xhrFields: {
+						withCredentials: true
+					},
+					success: function(result) {
+						callback(result);
+					},
+					error: function(error) {
+						alert("请求出错");
+					}
+				});
+			}
+
+			$("#hsSearch").on("click", function() {
+				searchBuilding();
+			});
+			//根据社区id获取楼栋信息
+			function searchBuilding() {
+				var mData = {
+					"communityId": "0002"
+				};
+				var ipPort = "http://127.0.0.1:8080/dsjh/";
+				var mUrl = "dcs/c45b330bc62144779be0859e99965c8a/select";
+				ajaxRequest(mData, ipPort, mUrl, function(result) {
+					// console.log(result);
+					//请求结果处理
+					if (result.code == 200) {
+						//请求成功
+						var data = result.data;
+						console.log(data);
+						$.each(data, function(i, item) {
+							if (item == null) {
+								return;
+							}
+							$("<option></option>")
+								.val(item["building_id"])
+								.text(item["building_name"])
+								.appendTo($("#buildingSelect"));
+						});
+					}
+				});
+			}
+			var buildId;
+			var unitId;
+			var floorId;
+			var roomNoId;
+			//楼栋改变获取单元号
+			$("#buildingSelect").on("change", buildingSelectChange);
+			function buildingSelectChange(event) {
+				console.log(event);
+			// var buildingSelectChange = function(sel) {
+				console.log(this.value);
+				// console.log(sel.value);
+				buildId = this.value;
+				var mData = {
+					"communityId": "0002",
+					"buildingId": buildId,
+				};
+				var ipPort = "http://127.0.0.1:8080/dsjh/";
+				var mUrl = "dcs/5efd334eceb94c59942f0f4e6e398994/select";
+				ajaxRequest(mData, ipPort, mUrl, function(result) {
+					// console.log(result);
+					//请求结果处理
+					if (result.code == 200) {
+						//请求成功
+						var data = result.data;
+						console.log(data);
+						$.each(data, function(i, item) {
+							if (item == null) {
+								return;
+							}
+							$("<option></option>")
+								.val(item["unit_id"])
+								.text(item["unit_name"])
+								.appendTo($("#unitSelect"));
+						});
+					}
+				});
+			}
+			//单元、楼栋改变获取楼层
+			var unitSelectChange = function(sel) {
+				// console.log(sel.value);
+				unitId = sel.value;
+				var mData = {
+					"communityId": "0002",
+					"buildingId": buildId,
+					"unitId": unitId
+				};
+				var ipPort = "http://127.0.0.1:8080/dsjh/";
+				var mUrl = "dcs/8c55bb7811784e86992ff2a21dd281c6/select";
+				ajaxRequest(mData, ipPort, mUrl, function(result) {
+					// console.log(result);
+					//请求结果处理
+					if (result.code == 200) {
+						//请求成功
+						var data = result.data;
+						console.log(data);
+						$.each(data, function(i, item) {
+							if (item == null) {
+								return;
+							}
+							$("<option></option>")
+								.val(item["floor"])
+								.text(item["floor"] + " 层")
+								.appendTo($("#floorSelect"));
+						});
+					}
+				});
+			}
+			//楼层、楼栋、单元改变获房间号
+			var floorSelectChange = function(sel) {
+				// console.log(sel.value);
+				floorId = sel.value;
+				var mData = {
+					"communityId": "0002",
+					"buildingId": buildId,
+					"unitId": unitId,
+					"floor": floorId
+				};
+				var ipPort = "http://127.0.0.1:8080/dsjh/";
+				var mUrl = "dcs/0505effd04ab4524bfa2300987268f92/select";
+				ajaxRequest(mData, ipPort, mUrl, function(result) {
+					// console.log(result);
+					//请求结果处理
+					if (result.code == 200) {
+						//请求成功
+						var data = result.data;
+						console.log(data);
+						$.each(data, function(i, item) {
+							if (item == null) {
+								return;
+							}
+							$("<option></option>")
+								.val(item["room_id"])
+								.text(item["room_number"])
+								.appendTo($("#roomNoSelect"));
+						});
+					}
+				});
+			}
+			//房间号改变
+			var roomNoSelectChange = function(sel) {
+				console.log(sel.value)
+			}
+		</script>
+		<!-- <script>
+			var city = [{
+					"id": 10001,
+					"name": "陕西省",
+					"child": [{
+							"id": 100011,
+							"name": "西安市",
+							"child": [{
+									"id": 100011,
+									"name": "高新区"
+								},
+								{
+									"id": 100011,
+									"name": "未央区"
+								}
+							]
+						},
+						{
+							"id": 100012,
+							"name": "宝鸡市",
+							"child": [{
+									"id": 100011,
+									"name": "高新区"
+								},
+								{
+									"id": 100011,
+									"name": "成仓区"
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": 10002,
+					"name": "甘肃省",
+					"child": [{
+							"id": 100021,
+							"name": "兰州市",
+							"child": [{
+									"id": 100021,
+									"name": "兰州区1"
+								},
+								{
+									"id": 100021,
+									"name": "兰州区2"
+								}
+							]
+						},
+						{
+							"id": 100022,
+							"name": "酒泉市",
+							"child": [{
+									"id": 100021,
+									"name": "酒泉区1"
+								},
+								{
+									"id": 100021,
+									"name": "酒泉区2"
+								}
+							]
+						}
+					]
+				}
+			]
+			var sheng = document.getElementsByClassName("sheng")[0];
+			var shi = document.getElementsByClassName("shi")[0];
+			var qu = document.getElementsByClassName("qu")[0];
+			var nowShengIndex = 0;
+			for (var i = 0; i < city.length; i++) {
+				var optEle = new Option(city[i].name, i);
+				console.log(optEle.innerHTML);
+				sheng.appendChild(optEle)
+			}
+			sheng.onchange = function() {
+				shi.options.length = 1;
+				qu.options.length = 1;
+				//this.value可取到当前所选值对应的索引
+				for (var i = 0; i < city[this.value].child.length; i++) {
+					var optEle = new Option(city[this.value].child[i].name, i);
+					shi.appendChild(optEle)
+				}
+				nowShengIndex = this.value;
+
+			};
+			shi.onchange = function() {
+				qu.options.length = 1;
+				console.log(qu);
+				for (var i = 0; i < city[nowShengIndex].child[this.value].child.length; i++) {
+					var optEle = new Option(city[nowShengIndex].child[this.value].child[i].name, i);
+					qu.appendChild(optEle)
+				}
+			}
+		</script> -->
+	</body>
+</html>
