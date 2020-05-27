@@ -34,7 +34,7 @@
 					<option value=''>-请选择楼栋-</option>
 				</select>
 			</div>
-			
+
 			<div>
 				单元：<select id="unitSelect" onChange="unitSelectChange(this)">
 					<option value=''>-请选择单元-</option>
@@ -56,6 +56,10 @@
 		</div>
 		<script src="../../jquery.min.3.2.1.js"></script>
 		<script>
+			$("#hsSearch").on("click", function() {
+				searchBuilding();
+			});
+
 			function ajaxRequest(params, ipPort, url, callback) {
 				var mData = params;
 				mData = JSON.stringify(mData);
@@ -78,9 +82,6 @@
 				});
 			}
 
-			$("#hsSearch").on("click", function() {
-				searchBuilding();
-			});
 			//根据社区id获取楼栋信息
 			function searchBuilding() {
 				var mData = {
@@ -95,6 +96,7 @@
 						//请求成功
 						var data = result.data;
 						console.log(data);
+						//each遍历处理data
 						$.each(data, function(i, item) {
 							if (item == null) {
 								return;
@@ -113,9 +115,10 @@
 			var roomNoId;
 			//楼栋改变获取单元号
 			$("#buildingSelect").on("change", buildingSelectChange);
+
 			function buildingSelectChange(event) {
 				console.log(event);
-			// var buildingSelectChange = function(sel) {
+				// var buildingSelectChange = function(sel) {
 				console.log(this.value);
 				// console.log(sel.value);
 				buildId = this.value;
@@ -144,6 +147,7 @@
 					}
 				});
 			}
+
 			//单元、楼栋改变获取楼层
 			var unitSelectChange = function(sel) {
 				// console.log(sel.value);

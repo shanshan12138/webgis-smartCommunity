@@ -90,6 +90,8 @@ require.config({
 		"yijiansou": "widget/yijiansou/yijiansou",
 		//环境监测
 		"huanjing": "widget/huanjing/huanjing",
+		//企业查询
+		"enterpriseQuery":"widget/enterpriseQuery/enterpriseQuery",
 		//车小丫
 		"chexiaoya": "widget/chexiaoya/chexiaoya",
 		//执法仪

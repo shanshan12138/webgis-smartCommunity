@@ -531,132 +531,80 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 			if (result.code == 200) {
 				var data = result.data;
 				if (data == null) {
-					//没有数据
+					//没有数据123
 					return;
-				}
-				//个人详细信息
-				$("#pdName").val(data[0].person_name);
-				$("#pdSex").val(data[0].gender);
-				$("#pdAge").val(getAge(formatDateTime(data[0].birthday)));
-				$("#pdDoorCardCount").val(data[0].cards.length);
-				$("#pdDoorCardNum").val(data[0].cards[0].card_number);
-				$("#pdIdentityNum").val(data[0].paper_number);
-				// $("#pdLoginTime").val(formatDateTime(data[0].modify_time));
-				$("#pdAddress").val(data[0].census);
-				//住房信息
-				$("#phType").val();
-				$("#phHouse").val(data[0].houses[0].connection_address);
-				$("#phAgentName").val(data[0].houses[0].agent_name);
-				$("#phPhone").val(data[0].houses[0].agent_phone);
-				var mContent = '<input id="phMonitoring" type="checkbox" ' + (data[0].focus == "" ? "" : "checked=\"checked\"") +
-					'" />';
-				$("#phMContainer").empty();
-				$("#phMContainer").append(mContent);
-				$("#phIdentityNum").val(data[0].houses[0].agent_paper_number);
+					//个人详细信息
+					$("#pdName").val(data[0].person_name);
+					$("#pdSex").val(data[0].gender);
+					$("#pdAge").val(getAge(formatDateTime(data[0].birthday)));
+					$("#pdDoorCardCount").val(data[0].cards.length);
+					$("#pdDoorCardNum").val(data[0].cards[0].card_number);
+					$("#pdIdentityNum").val(data[0].paper_number);
+					// $("#pdLoginTime").val(formatDateTime(data[0].modify_time));
+					$("#pdAddress").val(data[0].census);
+					//住房信息
+					$("#phType").val(data[0].live_type);
+					$("#phHouse").val(data[0].houses[0].connection_address);
+					$("#phAgentName").val(data[0].houses[0].agent_name);
+					$("#phPhone").val(data[0].houses[0].agent_phone);
+					var mContent = '<input id="phMonitoring" type="checkbox" ' + (data[0].focus == "" ? "" : "checked=\"checked\"") +
+						'" />';
+					$("#phMContainer").empty();
+					$("#phMContainer").append(mContent);
+					$("#phIdentityNum").val(data[0].houses[0].agent_paper_number);
 
-				$(".switch").bootstrapSwitch();
-				//个人打卡记录
-				var recordUrl = 'dcs/ad92d6295f714c7fa63bca37e78c994a/select';
-				var personId = data[0].origin_id;
-				var startTime = transDateTime($('#searchTimeStart').val());
-				var endTime = transDateTime($('#searchTimeEnd').val());
+					$(".switch").bootstrapSwitch();
+					//个人打卡记录
+					var recordUrl = 'dcs/ad92d6295f714c7fa63bca37e78c994a/select';
+					var personId = data[0].origin_id;
+					var startTime = transDateTime($('#searchTimeStart').val());
+					var endTime = transDateTime($('#searchTimeEnd').val());
 
-				var recordData = {
-					'personId': personId,
-					'startTime': startTime,
-					'endTime': endTime
-				}
-
-				ajaxRequest(recordData, ipPort, recordUrl, function(result) {
-					console.log(result);
-					//显示查询结果
-					if (result.code == 200) {
-						var data = result.data;
-						if (data == null) {
-							//没有数据
-							return;
-						}
-
-						/*<tr>
-							<td>00000001</td>
-							<td>小区南门</td>
-							<td>2018年7月13日12时43分</td>
-							<td>外出</td>
-							<td>门卡</td>
-						</tr>*/
-
-						var recordContent = '';
-						for (var i = 0; i < data.length; i++) {
-							recordContent = recordContent + '<tr><td>' + data[i].card_number + '</td><td>' + data[i].device_name +
-								'</td><td>' + formatDateTime(data[i].open_time) + '</td><td>' + data[i].open_action + '</td><td>' + data[
-									i].open_type + '</td></tr>';
-						}
-
-						$("#recordTBody").empty();
-						$("#recordTBody").append(recordContent);
+					var recordData = {
+						'personId': personId,
+						'startTime': startTime,
+						'endTime': endTime
 					}
-				});
+
+					ajaxRequest(recordData, ipPort, recordUrl, function(result) {
+						console.log(result);
+						//显示查询结果
+						if (result.code == 200) {
+							var data = result.data;
+							if (data == null) {
+								//没有数据
+								return;
+							}
+
+							/*<tr>
+								<td>00000001</td>
+								<td>小区南门</td>
+								<td>2018年7月13日12时43分</td>
+								<td>外出</td>
+								<td>门卡</td>
+							</tr>*/
+
+							var recordContent = '';
+							for (var i = 0; i < data.length; i++) {
+								recordContent = recordContent + '<tr><td>' + data[i].card_number + '</td><td>' + data[i].device_name +
+									'</td><td>' + formatDateTime(data[i].open_time) + '</td><td>' + data[i].open_action + '</td><td>' + data[
+										i].open_type + '</td></tr>';
+							}
+
+							$("#recordTBody").empty();
+							$("#recordTBody").append(recordContent);
+						}
+					});
+
+
+				}
 			}
 		});
-	}
 
+	}
 	/**
 	 * 房屋查询
 	 */
-	function searchHouse() {
-		//清空个人详细信息, 住房信息, 个人打卡记录
-
-		$("#hsBuilding").prop("checked", false);
-
-		//获取查询条件
-		var building = $("#hsBuilding").val();
-		var unit = $("#hsUnit").val().trim();
-		var floor = $("#hsFloor").val().trim();
-		var room = $("#hsDoor").val().trim();
-		var mData = {
-			"communityId": "0002",
-			"buildingId": building,
-			"unitId": unit,
-			"floor": floor,
-			"roomId": room
-		};
-		var mUrl = "dcs/637adaeda26941579caf689d018244a9/select";
-		ajaxRequest(mData, ipPort, mUrl, function(result) {
-			console.log(result);
-			//显示查询结果
-			if (result.code == 200) {
-				var data = result.data;
-				if (data == null) {
-					return;
-				}
-				//房屋权属信息
-				$("#hdName").val(data.agent_name);
-				$("#hdPhone").val(data.agent_phone);
-				$("#hdIdentityNum").val(data.agent_paper_number);
-				$("#hdTime").val(data.modify_time == "" ? "" : formatDateTime(data.modify_time));
-				//房屋数据统计
-				//房屋住房信息
-				var mContent = "";
-				for (var i in data.houseRelation) {
-					mContent = mContent + '<tr>' +
-						'<td style="overflow: hidden;">' + data.houseRelation[i].person_name + '</td>' +
-						'<td style="overflow: hidden;">' + data.houseRelation[i].gender + '</td>' +
-						'<td style="overflow: hidden;">' + getAge(data.houseRelation[i].birthday) + '</td>' +
-						'<td style="overflow: hidden;">' + data.houseRelation[i].card_numbers + '</td>' +
-						'<td style="overflow: hidden;">' + '' + '</td>' +
-						'<td style="overflow: hidden;">' + data.houseRelation[i].live_type + '</td>' +
-						'<td style="overflow: hidden;">' + '' + '</td>' +
-						'<td style="overflow: hidden;">' + (data.houseRelation[i].important == "" ? '普通' : '重点') + '</td>' +
-						'<td style="overflow: hidden;">' + data.houseRelation[i].mobile_number + '</td>' +
-						'<td style="overflow: hidden;">' + data.houseRelation[i].census + data.houseRelation[i].live_address +
-						'</td>' +
-						'</tr>';
-				}
-				$("#houseRelation").empty();
-				$("#houseRelation").append(mContent);
-			}
-		});
-	}
 
 	//根据社区id获取楼栋信息
 	function searchBuilding() {
@@ -670,7 +618,7 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 			if (result.code == 200) {
 				//请求成功
 				var data = result.data;
-				console.log(data);
+				// console.log(data);
 				$.each(data, function(i, item) {
 					if (item == null) {
 						return;
@@ -778,9 +726,85 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 	//房间号改变
 	function roomNoSelectChange(event) {
 		console.log(this.value);
-		floorId = this.value;
+		roomNoId = this.value;
 	}
-	
+
+	function searchHouse() {
+		//清空个人详细信息, 住房信息, 个人打卡记录
+		//获取查询条件
+		var mData = {
+			"communityId": "0002",
+			"roomId": roomNoId
+		};
+		var mUrl = "dcs/637adaeda26941579caf689d018244a9/select";
+		ajaxRequest(mData, ipPort, mUrl, function(result) {
+			if (result.code == 200) {
+				var data = result.data;
+				console.log(data);
+				if (data == null) {
+					return 0;
+				} else {
+					//房屋权属信息
+					if (data.houseRelation.length == 0) {
+						$("#hdName").val("无");
+						$("#hdPhone").val("无");
+						$("#hdIdentityNum").val("无");
+						$("#hdTime").val("无");
+					} else {
+						$("#hdName").val(data.houseRelation[0].person_name);
+						$("#hdPhone").val(data.houseRelation[0].mobile_number);
+						$("#hdIdentityNum").val(data.houseRelation[0].paper_number);
+						$("#hdTime").val(data.modify_time == "" ? "" : formatDateTime(data.modify_time));
+						//现流动人口数量  居住类型是自住
+						var xldrk = 0;
+						for (var i in data.houseRelation) {
+							if (data.houseRelation[i].live_type == "自主") {
+								xldrk++;
+							}
+						}
+						console.log(xldrk);
+					}
+
+					//房屋数据统计
+
+					//现居住人口数量
+					$("#XJZRK").val(data.houseRelation.length);
+					//先绑定门禁卡数量
+					$("#XBDMJK").val(0);
+					//退租人口数量
+					$("#YTZRK").val(0);
+					//现流动人口数量  居住类型是自住			
+					$("#XLDRK").val(xldrk);
+					//重点监控人口数量
+					$("#ZDJKRK").val(0);
+					//房屋住房信息
+					var mContent = "";
+					for (var i in data.houseRelation) {
+						mContent = mContent + '<tr>' +
+							'<td style="overflow: hidden;">' + data.houseRelation[i].person_name + '</td>' +
+							'<td style="overflow: hidden;">' + data.houseRelation[i].gender + '</td>' +
+							'<td style="overflow: hidden;">' + getAge(data.houseRelation[i].birthday) + '</td>' +
+							'<td style="overflow: hidden;">' + data.houseRelation[i].card_numbers + '</td>' +
+							'<td style="overflow: hidden;">' + '' + '</td>' +
+							'<td style="overflow: hidden;">' + data.houseRelation[i].live_type + '</td>' +
+							'<td style="overflow: hidden;">' + '' + '</td>' +
+							'<td style="overflow: hidden;">' + (data.houseRelation[i].important == "" ? '普通' : '重点') + '</td>' +
+							'<td style="overflow: hidden;">' + data.houseRelation[i].mobile_number + '</td>' +
+							'<td style="overflow: hidden;">' + data.houseRelation[i].census + data.houseRelation[i].live_address +
+							'</td>' +
+							'</tr>';
+					}
+
+
+					$("#houseRelation").empty();
+					$("#houseRelation").append(mContent);
+				}
+			}
+		});
+	}
+
+
+
 
 
 	//企业查询
