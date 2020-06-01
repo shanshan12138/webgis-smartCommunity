@@ -123,10 +123,7 @@ define(["jquery", "bootstrap", "pagination", "datetimepicker", "bootstrapSwitch"
 				toolbox: {
 					show: true,
 					feature: {
-						//          mark : {show: true},
-						//          dataView : {show: true, readOnly: false},
 						magicType: { show: true, type: ['line', 'bar'] },
-						//          restore : {show: true},
 						saveAsImage: { show: true }
 					}
 				},
